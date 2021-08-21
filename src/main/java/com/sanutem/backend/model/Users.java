@@ -3,21 +3,74 @@ package com.sanutem.backend.model;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
+import static javax.persistence.GenerationType.SEQUENCE;
+
+@Entity(name = "Users")
+@Table(
+        name = "users",
+        uniqueConstraints ={
+                @UniqueConstraint(name = "user_name", columnNames = "userName"),
+                @UniqueConstraint(name = "dni", columnNames = "dni")
+        }
+)
 public class Users {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @SequenceGenerator(
+            name="user_sequence",
+            sequenceName = "user_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = SEQUENCE,
+            generator = "user_sequence"
+    )
+    @Column(
+            name = "id",
+            updatable = false
+    )
     private Integer id;
-    @Column(unique = true)
+    @Column(
+            name = "dni",
+            nullable = false
+    )
+    //@Column(unique = true)
     private String dni;
+    @Column(
+            name = "firstName",
+            nullable = false
+    )
     private String firstName;
+    @Column(
+            name = "lastName",
+            nullable = false
+    )
     private String lastName;
-    @Column(unique = true)
+    @Column(
+            name = "userName",
+            nullable = false
+    )
+    //@Column(unique = true)
     private String userName;
+    @Column(
+            name = "email",
+            nullable = false
+    )
     private String email;
+    @Column(
+            name = "sex",
+            nullable = false
+    )
     private String sex;
+    @Column(
+            name = "birthday",
+            nullable = false
+    )
     private LocalDate birthday;
+    @Column(
+            name = "address",
+            nullable = false
+    )
     private String address;
 
     public Users() {
