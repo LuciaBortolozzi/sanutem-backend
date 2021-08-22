@@ -24,7 +24,7 @@ public class MedicalHistory {
     )
     private Integer idMedicalHistory;
     @Column(
-            name = "idMedicalHistory",
+            name = "id",
             updatable = false
     )
     private Integer id; //hace referencia al id del paciente humano, hay que revisar las annotations: @ManyToOne @OneToMany
