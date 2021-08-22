@@ -27,23 +27,23 @@ public class Users {
             generator = "user_sequence"
     )
     @Column(
-            name = "id",
-            updatable = false
+            name = "id"/*,
+            updatable = false*/
     )
     private Integer id;
     @Column(
-            name = "dni",
-            nullable = false
+            name = "dni"/*,
+            nullable = false*/
     )
     private String dni;
     @Column(
-            name = "firstName",
-            nullable = false
+            name = "firstName"/*,
+            nullable = false*/
     )
     private String firstName;
     @Column(
-            name = "lastName",
-            nullable = false
+            name = "lastName"/*,
+            nullable = false*/
     )
     private String lastName;
     @Column(
@@ -57,18 +57,18 @@ public class Users {
     )
     private String email;
     @Column(
-            name = "sex",
-            nullable = false
+            name = "sex"/*,
+            nullable = false*/
     )
     private String sex;
     @Column(
-            name = "birthday",
-            nullable = false
+            name = "birthday"/*,
+            nullable = false*/
     )
     private LocalDate birthday;
     @Column(
-            name = "home_address",
-            nullable = false
+            name = "home_address"/*,
+            nullable = false*/
     )
     private String home_address;
     @Column(
@@ -77,13 +77,13 @@ public class Users {
     )
     private String password;
     @Column(
-            name = "created",
-            nullable = false
+            name = "created"/*,
+            nullable = false*/
     )
     private Instant created;
     @Column(
-            name = "enabled",
-            nullable = false
+            name = "enabled"/*,
+            nullable = false*/
     )
     private boolean enabled;
 
