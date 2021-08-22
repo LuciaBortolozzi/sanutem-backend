@@ -41,7 +41,7 @@ public class AuthService {
 
     public void signup(RegisterRequest registerRequest) {
         Users user = new Users();
-        user.setUserName(registerRequest.getUsername());
+        user.setUsername(registerRequest.getUsername());
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setCreated(Instant.now());
@@ -65,7 +65,7 @@ public class AuthService {
     }
 
     private void fetchUserAndEnable(VerificationToken verificationToken) {
-        String username = verificationToken.getUser().getUserName();
+        String username = verificationToken.getUser().getUsername();
         Users user = userRepository.findByUsername(username).orElseThrow(() -> new AppException("User not found with name - " + username));
         user.setEnabled(true);
         userRepository.save(user);

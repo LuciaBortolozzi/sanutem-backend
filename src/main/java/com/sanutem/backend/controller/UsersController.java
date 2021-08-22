@@ -20,7 +20,7 @@ public class UsersController {
         // @RequestParam means it is a parameter from the GET or POST request
 
         Users n = new Users();
-        n.setUserName(name);
+        n.setUsername(name);
         n.setEmail(email);
         userRepository.save(n);
         return "Saved";

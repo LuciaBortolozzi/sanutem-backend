@@ -10,7 +10,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Table(
         name = "users",
         uniqueConstraints ={
-                @UniqueConstraint(name = "user_name", columnNames = "userName"),
+                @UniqueConstraint(name = "user_name", columnNames = "username"),
                 @UniqueConstraint(name = "dni", columnNames = "dni")
         }
 )
@@ -47,10 +47,10 @@ public class Users {
     )
     private String lastName;
     @Column(
-            name = "userName",
+            name = "username",
             nullable = false
     )
-    private String userName;
+    private String username;
     @Column(
             name = "email",
             nullable = false
@@ -91,13 +91,13 @@ public class Users {
     }
 
     public Users(Integer id, String dni, String firstName, String lastName,
-                 String userName, String email, String sex, LocalDate birthday,
+                 String username, String email, String sex, LocalDate birthday,
                  String address, String password, Instant created, boolean enabled) {
         this.id = id;
         this.dni = dni;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userName = userName;
+        this.username = username;
         this.email = email;
         this.sex = sex;
         this.birthday = birthday;
@@ -139,12 +139,12 @@ public class Users {
         this.lastName = lastName;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {

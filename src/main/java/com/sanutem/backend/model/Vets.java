@@ -10,11 +10,11 @@ public class Vets extends Professionals{
     public Vets() {
     }
 
-    public Vets(Integer id, String dni, String firstName, String lastName, String userName, String email, String sex, LocalDate birthday, String address, String password, Instant created, boolean enabled) {
-        super(id, dni, firstName, lastName, userName, email, sex, birthday, address, password, created, enabled);
+    public Vets(Integer id, String dni, String firstName, String lastName, String username, String email, String sex, LocalDate birthday, String address, String password, Instant created, boolean enabled) {
+        super(id, dni, firstName, lastName, username, email, sex, birthday, address, password, created, enabled);
     }
 
-    public Vets(Integer id, String dni, String firstName, String lastName, String userName, String email, String sex, LocalDate birthday, String address, Long licenseNumber, String specialization, String password, Instant created, boolean enabled) {
-        super(id, dni, firstName, lastName, userName, email, sex, birthday, address, licenseNumber, specialization, password, created, enabled);
+    public Vets(Integer id, String dni, String firstName, String lastName, String username, String email, String sex, LocalDate birthday, String address, Long licenseNumber, String specialization, String password, Instant created, boolean enabled) {
+        super(id, dni, firstName, lastName, username, email, sex, birthday, address, licenseNumber, specialization, password, created, enabled);
     }
 }
