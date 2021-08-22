@@ -24,18 +24,18 @@ public class MedicalHistory {
     )
     private Integer idMedicalHistory;
     @Column(
-            name = "id",
-            updatable = false
+            name = "id"/*,
+            nullable = false*/
     )
     private Integer id; //hace referencia al id del paciente humano, hay que revisar las annotations: @ManyToOne @OneToMany
     @Column(
-            name = "date",
-            updatable = false
+            name = "date"/*,
+            nullable = false*/
     )
     private LocalDate date;
     @Column(
-            name = "details",
-            updatable = false
+            name = "details"/*,
+            nullable = false*/
     )
     private String details;
 

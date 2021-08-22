@@ -34,43 +34,43 @@ public class Pets {
     )
     private Integer idUser;
     @Column(
-            name = "name",
-            nullable = false
+            name = "name"/*,
+            nullable = false*/
     )
     private String name;
     @Column(
-            name = "sex",
-            nullable = false
+            name = "sex"/*,
+            nullable = false*/
     )
     private String sex;
     @Column(
-            name = "birthday",
-            nullable = false
+            name = "birthday"/*,
+            nullable = false*/
     )
     private LocalDate birthday;
     @Column(
-            name = "medicalHistory",
-            nullable = false
+            name = "medicalHistory"/*,
+            nullable = false*/
     )
     private String medicalHistory;
     @Column(
-            name = "surgeries",
-            nullable = false
+            name = "surgeries"/*,
+            nullable = false*/
     )
     private String surgeries;
     @Column(
-            name = "medicines",
-            nullable = false
+            name = "medicines"/*,
+            nullable = false*/
     )
     private String medicines;
     @Column(
-            name = "species",
-            nullable = false
+            name = "species"/*,
+            nullable = false*/
     )
     private String species;
     @Column(
-            name = "breed",
-            nullable = false
+            name = "breed"/*,
+            nullable = false*/
     )
     private String breed;
 

@@ -9,28 +9,28 @@ import java.time.LocalDate;
 public class Patients extends Users{
 
     @Column(
-            name = "bloodType",
-            nullable = false
+            name = "bloodType"/*,
+            nullable = false*/
     )
     private String bloodType;
     @Column(
-            name = "medicalHistory",
-            nullable = false
+            name = "medicalHistory"/*,
+            nullable = false*/
     )
     private String medicalHistory;
     @Column(
-            name = "surgeries",
-            nullable = false
+            name = "surgeries"/*,
+            nullable = false*/
     )
     private String surgeries;
     @Column(
-            name = "medicines",
-            nullable = false
+            name = "medicines"/*,
+            nullable = false*/
     )
     private String medicines;
 
     public Patients() {}
-    /*
+
     public Patients(String bloodType, String medicalHistory, String surgeries, String medicines) {
         this.bloodType = bloodType;
         this.medicalHistory = medicalHistory;
@@ -44,7 +44,7 @@ public class Patients extends Users{
         this.medicalHistory = medicalHistory;
         this.surgeries = surgeries;
         this.medicines = medicines;
-    }*/
+    }
 
     public String getBloodType() {
         return bloodType;

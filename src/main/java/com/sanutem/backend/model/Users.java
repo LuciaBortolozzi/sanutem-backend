@@ -14,34 +14,16 @@ import java.time.LocalDate;
 import static javax.persistence.GenerationType.IDENTITY;
 import static javax.persistence.GenerationType.SEQUENCE;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
-public class Users {
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long userId;
-    @NotBlank(message = "Username is required")
-    private String username;
-    @NotBlank(message = "Password is required")
-    private String password;
-    @Email
-    @NotEmpty(message = "Email is required")
-    private String email;
-    private Instant created;
-    private boolean enabled;
-
-}
-/*
 @Entity(name = "Users")
+/*
 @Table(
         name = "users",
         uniqueConstraints ={
-                @UniqueConstraint(name = "user_name", columnNames = "username")
+                @UniqueConstraint(name = "user_name", columnNames = "username"),
+                @UniqueConstraint(name = "dni", columnNames = "dni")
         }
 )
-//@UniqueConstraint(name = "dni", columnNames = "dni")
+*/
 public class Users {
 
     @Id
@@ -60,58 +42,58 @@ public class Users {
     )
     private Integer id;
     @Column(
-            name = "dni",
-            nullable = false
+            name = "dni"/*,
+            nullable = false*/
     )
     private String dni;
     @Column(
-            name = "firstName",
-            nullable = false
+            name = "firstName"/*,
+            nullable = false*/
     )
     private String firstName;
     @Column(
-            name = "lastName",
-            nullable = false
+            name = "lastName"/*,
+            nullable = false*/
     )
     private String lastName;
     @Column(
-            name = "username",
-            nullable = false
+            name = "username"/*,
+            nullable = false*/
     )
     private String username;
     @Column(
-            name = "email",
-            nullable = false
+            name = "email"/*,
+            nullable = false*/
     )
     private String email;
     @Column(
-            name = "sex",
-            nullable = false
+            name = "sex"/*,
+            nullable = false*/
     )
     private String sex;
     @Column(
-            name = "birthday",
-            nullable = false
+            name = "birthday"/*,
+            nullable = false*/
     )
     private LocalDate birthday;
     @Column(
-            name = "home_address",
-            nullable = false
+            name = "home_address"/*,
+            nullable = false*/
     )
     private String home_address;
     @Column(
-            name = "password",
-            nullable = false
+            name = "password"/*,
+            nullable = false*/
     )
     private String password;
     @Column(
-            name = "created",
-            nullable = false
+            name = "created"/*,
+            nullable = false*/
     )
     private Instant created;
     @Column(
-            name = "enabled",
-            nullable = false
+            name = "enabled"/*,
+            nullable = false*/
     )
     private boolean enabled;
 
@@ -230,5 +212,4 @@ public class Users {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-
-}*/
+}

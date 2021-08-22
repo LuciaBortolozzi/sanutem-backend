@@ -8,12 +8,13 @@ import java.util.Date;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity(name = "Appointments")
+/*
 @Table(
         name = "appointments",
         uniqueConstraints ={
                 @UniqueConstraint(name = "appointments_date", columnNames = {"date", "hour"})
         }
-)
+)*/
 public class Appointments {
 
     @Id
@@ -32,13 +33,13 @@ public class Appointments {
     )
     private Integer idAppointments;
     @Column(
-            name = "date",
-            nullable = false
+            name = "date"/*,
+            nullable = false*/
     )
     private LocalDate date;
     @Column(
-            name = "hour",
-            nullable = false
+            name = "hour"/*,
+            nullable = false*/
     )
     private LocalTime hour;
 

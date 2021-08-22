@@ -28,18 +28,18 @@ public class MedicalTests {
     )
     private Integer id;//hace referencia al id del paciente humano, hay que revisar las annotations: @ManyToOne @OneToMany
     @Column(
-            name = "prescription",
-            updatable = false
+            name = "prescription"/*,
+            nullable = false*/
     )
     private String prescription;
     @Column(
-            name = "details",
-            updatable = false
+            name = "details"/*,
+            nullable = false*/
     )
     private String details;
     @Column(
-            name = "idProfessional",
-            updatable = false
+            name = "idProfessional"/*,
+            nullable = false*/
     )
     private Integer idProfessional;//hay que revisar las annotations: @ManyToOne @OneToMany
 
