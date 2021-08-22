@@ -30,7 +30,7 @@ public class Patients extends Users{
     private String medicines;
 
     public Patients() {}
-
+    /*
     public Patients(String bloodType, String medicalHistory, String surgeries, String medicines) {
         this.bloodType = bloodType;
         this.medicalHistory = medicalHistory;
@@ -44,7 +44,7 @@ public class Patients extends Users{
         this.medicalHistory = medicalHistory;
         this.surgeries = surgeries;
         this.medicines = medicines;
-    }
+    }*/
 
     public String getBloodType() {
         return bloodType;
