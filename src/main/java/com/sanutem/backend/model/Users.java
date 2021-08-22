@@ -10,10 +10,10 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Table(
         name = "users",
         uniqueConstraints ={
-                @UniqueConstraint(name = "user_name", columnNames = "username"),
-                //@UniqueConstraint(name = "dni", columnNames = "dni")
+                @UniqueConstraint(name = "user_name", columnNames = "username")
         }
 )
+//@UniqueConstraint(name = "dni", columnNames = "dni")
 public class Users {
 
     @Id
