@@ -35,7 +35,6 @@ public class Users {
             name = "dni",
             nullable = false
     )
-    //@Column(unique = true)
     private String dni;
     @Column(
             name = "firstName",
@@ -51,7 +50,6 @@ public class Users {
             name = "userName",
             nullable = false
     )
-    //@Column(unique = true)
     private String userName;
     @Column(
             name = "email",
@@ -92,7 +90,9 @@ public class Users {
     public Users() {
     }
 
-    public Users(Integer id, String dni, String firstName, String lastName, String userName, String email, String sex, LocalDate birthday, String address, String password, Instant created, boolean enabled) {
+    public Users(Integer id, String dni, String firstName, String lastName,
+                 String userName, String email, String sex, LocalDate birthday,
+                 String address, String password, Instant created, boolean enabled) {
         this.id = id;
         this.dni = dni;
         this.firstName = firstName;

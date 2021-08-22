@@ -1,6 +1,8 @@
 package com.sanutem.backend.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 import static javax.persistence.GenerationType.SEQUENCE;
@@ -33,16 +35,16 @@ public class Appointments {
             name = "date",
             nullable = false
     )
-    private Date date;
+    private LocalDate date;
     @Column(
             name = "hour",
             nullable = false
     )
-    private String hour;
+    private LocalTime hour;
 
     public Appointments() {}
 
-    public Appointments(Integer idAppointments, Date date, String hour) {
+    public Appointments(Integer idAppointments, LocalDate date, LocalTime hour) {
         this.idAppointments = idAppointments;
         this.date = date;
         this.hour = hour;
@@ -56,19 +58,19 @@ public class Appointments {
         this.idAppointments = idAppointments;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public String getHour() {
+    public LocalTime getHour() {
         return hour;
     }
 
-    public void setHour(String hour) {
+    public void setHour(LocalTime hour) {
         this.hour = hour;
     }
 }
