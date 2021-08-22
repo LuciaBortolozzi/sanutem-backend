@@ -38,8 +38,8 @@ public class Patients extends Users{
         this.medicines = medicines;
     }
 
-    public Patients(Integer id, String dni, String firstName, String lastName, String username, String email, String sex, LocalDate birthday, String address, String bloodType, String medicalHistory, String surgeries, String medicines, String password, Instant created, boolean enabled) {
-        super(id, dni, firstName, lastName, username, email, sex, birthday, address, password, created, enabled);
+    public Patients(Integer id, String dni, String firstName, String lastName, String username, String email, String sex, LocalDate birthday, String home_address, String bloodType, String medicalHistory, String surgeries, String medicines, String password, Instant created, boolean enabled) {
+        super(id, dni, firstName, lastName, username, email, sex, birthday, home_address, password, created, enabled);
         this.bloodType = bloodType;
         this.medicalHistory = medicalHistory;
         this.surgeries = surgeries;

@@ -26,12 +26,12 @@ public class Professionals extends Users{
 
     public Professionals(){}
 
-    public Professionals(Integer id, String dni, String firstName, String lastName, String username, String email, String sex, LocalDate birthday, String address, String password, Instant created, boolean enabled){
-        super(id, dni, firstName, lastName, username, email, sex, birthday, address, password, created, enabled);
+    public Professionals(Integer id, String dni, String firstName, String lastName, String username, String email, String sex, LocalDate birthday, String home_address, String password, Instant created, boolean enabled){
+        super(id, dni, firstName, lastName, username, email, sex, birthday, home_address, password, created, enabled);
     }
 
-    public Professionals(Integer id, String dni, String firstName, String lastName, String username, String email, String sex, LocalDate birthday, String address, Long licenseNumber, String specialization, String password, Instant created, boolean enabled) {
-        super(id, dni, firstName, lastName, username, email, sex, birthday, address, password, created, enabled);
+    public Professionals(Integer id, String dni, String firstName, String lastName, String username, String email, String sex, LocalDate birthday, String home_address, Long licenseNumber, String specialization, String password, Instant created, boolean enabled) {
+        super(id, dni, firstName, lastName, username, email, sex, birthday, home_address, password, created, enabled);
         this.licenseNumber = licenseNumber;
         this.specialization = specialization;
     }
