@@ -2,6 +2,7 @@ package com.sanutem.backend.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Entity(name = "Patients")
@@ -37,8 +38,8 @@ public class Patients extends Users{
         this.medicines = medicines;
     }
 
-    public Patients(Integer id, String dni, String firstName, String lastName, String userName, String email, String sex, LocalDate birthday, String address, String bloodType, String medicalHistory, String surgeries, String medicines) {
-        super(id, dni, firstName, lastName, userName, email, sex, birthday, address);
+    public Patients(Integer id, String dni, String firstName, String lastName, String userName, String email, String sex, LocalDate birthday, String address, String bloodType, String medicalHistory, String surgeries, String medicines, String password, Instant created, boolean enabled) {
+        super(id, dni, firstName, lastName, userName, email, sex, birthday, address, password, created, enabled);
         this.bloodType = bloodType;
         this.medicalHistory = medicalHistory;
         this.surgeries = surgeries;

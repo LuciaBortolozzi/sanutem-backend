@@ -1,6 +1,7 @@
 package com.sanutem.backend.model;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.time.LocalDate;
 
 import static javax.persistence.GenerationType.SEQUENCE;
@@ -72,11 +73,26 @@ public class Users {
             nullable = false
     )
     private String address;
+    @Column(
+            name = "password",
+            nullable = false
+    )
+    private String password;
+    @Column(
+            name = "created",
+            nullable = false
+    )
+    private Instant created;
+    @Column(
+            name = "enabled",
+            nullable = false
+    )
+    private boolean enabled;
 
     public Users() {
     }
 
-    public Users(Integer id, String dni, String firstName, String lastName, String userName, String email, String sex, LocalDate birthday, String address) {
+    public Users(Integer id, String dni, String firstName, String lastName, String userName, String email, String sex, LocalDate birthday, String address, String password, Instant created, boolean enabled) {
         this.id = id;
         this.dni = dni;
         this.firstName = firstName;
@@ -86,54 +102,9 @@ public class Users {
         this.sex = sex;
         this.birthday = birthday;
         this.address = address;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String apellido) {
-        this.lastName = apellido;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sexo) {
-        this.sex = sexo;
-    }
-
-    public LocalDate getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(LocalDate fechaNacimiento) {
-        this.birthday = fechaNacimiento;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String direccion) {
-        this.address = direccion;
+        this.password = password;
+        this.created = created;
+        this.enabled = enabled;
     }
 
     public Integer getId() {
@@ -144,12 +115,36 @@ public class Users {
         this.id = id;
     }
 
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String name) {
-        this.firstName = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {
@@ -158,5 +153,53 @@ public class Users {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Instant getCreated() {
+        return created;
+    }
+
+    public void setCreated(Instant created) {
+        this.created = created;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

@@ -1,6 +1,7 @@
 package com.sanutem.backend.model;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Entity(name = "Professionals")
@@ -25,12 +26,12 @@ public class Professionals extends Users{
 
     public Professionals(){}
 
-    public Professionals(Integer id, String dni, String firstName, String lastName, String userName, String email, String sex, LocalDate birthday, String address){
-        super(id, dni, firstName, lastName, userName, email, sex, birthday, address);
+    public Professionals(Integer id, String dni, String firstName, String lastName, String userName, String email, String sex, LocalDate birthday, String address, String password, Instant created, boolean enabled){
+        super(id, dni, firstName, lastName, userName, email, sex, birthday, address, password, created, enabled);
     }
 
-    public Professionals(Integer id, String dni, String firstName, String lastName, String userName, String email, String sex, LocalDate birthday, String address, Long licenseNumber, String specialization) {
-        super(id, dni, firstName, lastName, userName, email, sex, birthday, address);
+    public Professionals(Integer id, String dni, String firstName, String lastName, String userName, String email, String sex, LocalDate birthday, String address, Long licenseNumber, String specialization, String password, Instant created, boolean enabled) {
+        super(id, dni, firstName, lastName, userName, email, sex, birthday, address, password, created, enabled);
         this.licenseNumber = licenseNumber;
         this.specialization = specialization;
     }
