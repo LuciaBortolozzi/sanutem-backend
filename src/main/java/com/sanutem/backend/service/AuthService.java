@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -44,6 +45,12 @@ public class AuthService {
         user.setUsername(registerRequest.getUsername());
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        user.setFirstName(registerRequest.getFirstName());
+        user.setLastName(registerRequest.getLastName());
+        user.setDni(registerRequest.getDni());
+        user.setHomeAddress(registerRequest.getAddress());
+        //user.setBirthday(LocalDate.parse(registerRequest.getBirthday()));
+        user.setSex(registerRequest.getSex());
         user.setCreated(Instant.now());
         user.setEnabled(false);
 
