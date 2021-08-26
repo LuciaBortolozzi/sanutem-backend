@@ -103,6 +103,11 @@
             <version>0.11.2</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.18.1</version>
+        </dependency>
         <!-- Spring Fox Dependencies -->
         <dependency>
             <groupId>io.springfox</groupId>
