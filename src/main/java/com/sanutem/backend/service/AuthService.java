@@ -49,7 +49,7 @@ public class AuthService {
         user.setLastName(registerRequest.getLastName());
         user.setDni(registerRequest.getDni());
         user.setHomeAddress(registerRequest.getAddress());
-        user.setBirthday(LocalDate.parse(registerRequest.getBirthday()));
+        //user.setBirthday(LocalDate.parse(registerRequest.getBirthday()));
         user.setSex(registerRequest.getSex());
         user.setCreated(Instant.now());
         user.setEnabled(false);
