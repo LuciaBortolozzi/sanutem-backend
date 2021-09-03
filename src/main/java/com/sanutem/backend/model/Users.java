@@ -96,13 +96,18 @@ public class Users {
             nullable = false*/
     )
     private boolean enabled;
+    @Column(
+            name = "role"/*,
+            nullable = false*/
+    )
+    private String role;
 
     public Users() {
     }
 
-    public Users(Integer id, String dni, String firstName, String lastName,
-                 String username, String email, String sex, LocalDate birthday,
-                 String home_address, String password, Instant created, boolean enabled) {
+    public Users(Integer id, String dni, String firstName, String lastName, String username,
+                 String email, String sex, LocalDate birthday, String home_address,
+                 String password, Instant created, boolean enabled, String role) {
         this.id = id;
         this.dni = dni;
         this.firstName = firstName;
@@ -115,6 +120,7 @@ public class Users {
         this.password = password;
         this.created = created;
         this.enabled = enabled;
+        this.role = role;
     }
 
     public Integer getId() {
@@ -212,4 +218,8 @@ public class Users {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
+    public String getRole() {return role;}
+
+    public void setRole(String role) {this.role = role;}
 }

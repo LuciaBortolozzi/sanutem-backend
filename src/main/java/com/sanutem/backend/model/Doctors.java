@@ -10,11 +10,11 @@ public class Doctors extends Professionals{
     public Doctors() {
     }
 
-    public Doctors(Integer id, String dni, String firstName, String lastName, String username, String email, String sex, LocalDate birthday, String home_address, String password, Instant created, boolean enabled) {
-        super(id, dni, firstName, lastName, username, email, sex, birthday, home_address, password, created, enabled);
+    public Doctors(Integer id, String dni, String firstName, String lastName, String username, String email, String sex, LocalDate birthday, String home_address, String password, Instant created, boolean enabled, String role) {
+        super(id, dni, firstName, lastName, username, email, sex, birthday, home_address, password, created, enabled, role);
     }
 
-    public Doctors(Integer id, String dni, String firstName, String lastName, String username, String email, String sex, LocalDate birthday, String home_address, Long licenseNumber, String specialization, String password, Instant created, boolean enabled) {
-        super(id, dni, firstName, lastName, username, email, sex, birthday, home_address, licenseNumber, specialization, password, created, enabled);
+    public Doctors(Integer id, String dni, String firstName, String lastName, String username, String email, String sex, LocalDate birthday, String home_address, Long licenseNumber, String specialization, String password, Instant created, boolean enabled, String role) {
+        super(id, dni, firstName, lastName, username, email, sex, birthday, home_address, licenseNumber, specialization, password, created, enabled, role);
     }
 }
