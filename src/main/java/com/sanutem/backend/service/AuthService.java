@@ -53,6 +53,7 @@ public class AuthService {
         user.setSex(registerRequest.getSex());
         user.setCreated(Instant.now());
         user.setEnabled(false);
+        user.setRole(registerRequest.getRole());
 
         userRepository.save(user);
 
