@@ -59,8 +59,6 @@ public class AuthController {
 
     @GetMapping("/user-profile/{username}/") //VER ESTO DE ACA
     public Optional<Users> getUserDetails(@PathVariable String username){
-        System.out.println("hola manola");
-        System.out.println("username:" + username + "query:" +usersRepository.findByUsername(username).get().getEmail());
         return usersRepository.findByUsername(username);
     }
 }
