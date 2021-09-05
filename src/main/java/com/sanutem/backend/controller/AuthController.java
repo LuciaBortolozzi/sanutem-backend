@@ -1,9 +1,6 @@
 package com.sanutem.backend.controller;
 
-import com.sanutem.backend.dto.AuthenticationResponse;
-import com.sanutem.backend.dto.LoginRequest;
-import com.sanutem.backend.dto.RefreshTokenRequest;
-import com.sanutem.backend.dto.RegisterRequest;
+import com.sanutem.backend.dto.*;
 import com.sanutem.backend.model.Users;
 import com.sanutem.backend.repository.UsersRepository;
 import com.sanutem.backend.service.AuthService;
@@ -32,6 +29,13 @@ public class AuthController {
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
         authService.signup(registerRequest);
         return new ResponseEntity<>("User Registration Successful",
+                OK);
+    }
+
+    @PostMapping("/registerPet")
+    public ResponseEntity<String> registerPet(@RequestBody RegisterPetRequest registerPetRequest) {
+        authService.registerPet(registerPetRequest);
+        return new ResponseEntity<>("Pet Registration Successful",
                 OK);
     }
 

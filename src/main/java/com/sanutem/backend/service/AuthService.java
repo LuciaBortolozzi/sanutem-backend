@@ -1,13 +1,12 @@
 package com.sanutem.backend.service;
 
-import com.sanutem.backend.dto.AuthenticationResponse;
-import com.sanutem.backend.dto.LoginRequest;
-import com.sanutem.backend.dto.RefreshTokenRequest;
-import com.sanutem.backend.dto.RegisterRequest;
+import com.sanutem.backend.dto.*;
 import com.sanutem.backend.exception.AppException;
 import com.sanutem.backend.model.NotificationEmail;
+import com.sanutem.backend.model.Pets;
 import com.sanutem.backend.model.Users;
 import com.sanutem.backend.model.VerificationToken;
+import com.sanutem.backend.repository.PetsRepository;
 import com.sanutem.backend.repository.UsersRepository;
 import com.sanutem.backend.repository.VerificationTokenRepository;
 import com.sanutem.backend.security.JwtProvider;
@@ -34,6 +33,7 @@ public class AuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final UsersRepository userRepository;
+    private final PetsRepository petsRepository;
     private final VerificationTokenRepository verificationTokenRepository;
     private final MailService mailService;
     private final AuthenticationManager authenticationManager;
@@ -62,6 +62,17 @@ public class AuthService {
                 user.getEmail(), "Gracias por registrarse en Sanutem, " +
                 "por favor active su cuenta haciendo click en el siguiente link : " +
                 "http://localhost:8080/api/auth/accountVerification/" + token));
+    }
+
+    public void registerPet(RegisterPetRequest registerPetRequest) {
+        Pets pet = new Pets();
+        pet.setName(registerPetRequest.getName());
+        pet.setSpecies(registerPetRequest.getSpecies());
+        pet.setBreed(registerPetRequest.getBreed());
+        //pet.setBirthday(LocalDate.parse(registerPetRequest.getBirthday()));
+        pet.setSex(registerPetRequest.getSex());
+
+        petsRepository.save(pet);
     }
 
     @Transactional(readOnly = true)
