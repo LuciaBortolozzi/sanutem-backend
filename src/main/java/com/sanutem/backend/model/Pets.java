@@ -29,10 +29,10 @@ public class Pets {
     )
     private Integer id; //hace referencia a el id del humano, hay que revisar las annotations: @ManyToOne @OneToMany
     @Column(
-            name = "idUser",
+            name = "nameUser",
             updatable = false
     )
-    private Integer idUser;
+    private String nameUser;
     @Column(
             name = "name"/*,
             nullable = false*/
@@ -76,12 +76,12 @@ public class Pets {
 
     public Pets(){}
 
-    public Pets(Integer idPet, Integer id, Integer idUser, String name,
+    public Pets(Integer idPet, Integer id, String nameUser, String name,
                 String sex, LocalDate birthday, String medicalHistory,
                 String surgeries, String medicines, String species, String breed) {
         this.idPet = idPet;
         this.id = id;
-        this.idUser = idUser;
+        this.nameUser = nameUser;
         this.name = name;
         this.sex = sex;
         this.birthday = birthday;
@@ -108,12 +108,12 @@ public class Pets {
         this.id = id;
     }
 
-    public Integer getIdUser() {
-        return idUser;
+    public String getNameUser() {
+        return nameUser;
     }
 
-    public void setIdUser(Integer idUser) {
-        this.idUser = idUser;
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
     }
 
     public String getName() {

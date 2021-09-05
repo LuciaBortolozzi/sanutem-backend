@@ -13,4 +13,5 @@ public class RegisterPetRequest {
     private String breed;
     //private String birthday;
     private String sex;
+    private String nameUser;
 }
