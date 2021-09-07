@@ -24,11 +24,6 @@ public class Pets {
     )
     private Integer idPet;
     @Column(
-            name = "id",
-            updatable = false
-    )
-    private Integer id; //hace referencia a el id del humano, hay que revisar las annotations: @ManyToOne @OneToMany
-    @Column(
             name = "nameUser",
             updatable = false
     )
@@ -76,11 +71,10 @@ public class Pets {
 
     public Pets(){}
 
-    public Pets(Integer idPet, Integer id, String nameUser, String name,
+    public Pets(Integer idPet, String nameUser, String name,
                 String sex, LocalDate birthday, String medicalHistory,
                 String surgeries, String medicines, String species, String breed) {
         this.idPet = idPet;
-        this.id = id;
         this.nameUser = nameUser;
         this.name = name;
         this.sex = sex;
@@ -98,14 +92,6 @@ public class Pets {
 
     public void setIdPet(Integer idPet) {
         this.idPet = idPet;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getNameUser() {

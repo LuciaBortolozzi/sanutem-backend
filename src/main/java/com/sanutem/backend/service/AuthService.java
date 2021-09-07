@@ -2,10 +2,7 @@ package com.sanutem.backend.service;
 
 import com.sanutem.backend.dto.*;
 import com.sanutem.backend.exception.AppException;
-import com.sanutem.backend.model.NotificationEmail;
-import com.sanutem.backend.model.Pets;
-import com.sanutem.backend.model.Users;
-import com.sanutem.backend.model.VerificationToken;
+import com.sanutem.backend.model.*;
 import com.sanutem.backend.repository.PetsRepository;
 import com.sanutem.backend.repository.UsersRepository;
 import com.sanutem.backend.repository.VerificationTokenRepository;
@@ -54,6 +51,12 @@ public class AuthService {
         user.setCreated(Instant.now());
         user.setEnabled(false);
         user.setRole(registerRequest.getRole());
+        user.setBlood_type(registerRequest.getBlood_type());
+        user.setMedical_history(registerRequest.getMedical_history());
+        user.setSurgeries(registerRequest.getSurgeries());
+        user.setMedicines(registerRequest.getMedicines());
+        user.setLicense_number(registerRequest.getLicense_number());
+        user.setSpecialization(registerRequest.getSpecialization());
 
         userRepository.save(user);
 
