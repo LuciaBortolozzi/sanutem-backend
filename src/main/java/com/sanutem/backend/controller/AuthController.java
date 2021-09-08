@@ -2,7 +2,9 @@ package com.sanutem.backend.controller;
 
 import com.sanutem.backend.dto.*;
 import com.sanutem.backend.model.Users;
+import com.sanutem.backend.repository.PetsRepository;
 import com.sanutem.backend.repository.UsersRepository;
+import com.sanutem.backend.repository.VerificationTokenRepository;
 import com.sanutem.backend.service.AuthService;
 import com.sanutem.backend.service.RefreshTokenService;
 import lombok.AllArgsConstructor;
@@ -24,6 +26,8 @@ public class AuthController {
     private final AuthService authService;
     private final RefreshTokenService refreshTokenService;
     private final UsersRepository usersRepository;
+    private final PetsRepository petsRepository;
+    private final VerificationTokenRepository verificationTokenRepository;
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
@@ -65,4 +69,18 @@ public class AuthController {
     public Optional<Users> getUserDetails(@PathVariable String username){
         return usersRepository.findByUsername(username);
     }
+
+    @DeleteMapping("/settings/{username}/")
+    public ResponseEntity<Void> deleteUser(@PathVariable String username){
+
+        Optional<Users> userToDelete = usersRepository.findByUsername(username);
+        authService.deleteUser(username, userToDelete);
+
+        if(userToDelete!=null){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+
 }

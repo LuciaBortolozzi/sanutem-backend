@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -77,6 +78,25 @@ public class AuthService {
         pet.setNameUser(registerPetRequest.getNameUser());
 
         petsRepository.save(pet);
+    }
+
+    public void deleteUser(String username, Optional<Users> userToDelete ) {
+
+        if(userToDelete!=null){
+            List<Integer> idPets = petsRepository.findIdPetByUsername(username);
+
+            Integer idToken = verificationTokenRepository.findIdTokenByUsername(username);
+
+            if(idToken!=null){
+                verificationTokenRepository.deleteTokenByIdToken(Long.valueOf(idToken));
+            }
+            if(idPets.size()>0){
+                for(Integer id:idPets){
+                    petsRepository.deletePetByIdPet(id);
+                }
+            }
+        }
+        userRepository.deleteUserById(userToDelete.get().getId());
     }
 
     @Transactional(readOnly = true)
