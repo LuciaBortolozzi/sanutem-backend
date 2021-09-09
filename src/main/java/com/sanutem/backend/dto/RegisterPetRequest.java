@@ -13,5 +13,8 @@ public class RegisterPetRequest {
     private String breed;
     //private String birthday;
     private String sex;
+    private String medical_history;
+    private String surgeries;
+    private String medicines;
     private String nameUser;
 }
