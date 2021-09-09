@@ -14,6 +14,9 @@ public interface PetsRepository extends JpaRepository<Pets, Integer> {
     @Query("SELECT p.idPet FROM Pets p WHERE p.nameUser = ?1")
     List<Integer> findIdPetByUsername(String nameUser);
 
+    @Query("SELECT p FROM Pets p WHERE p.nameUser = ?1")
+    List<Pets> getPetsByUsername(String nameUser);
+
     @Transactional
     @Modifying
     @Query("DELETE FROM Pets p WHERE p.idPet = ?1")

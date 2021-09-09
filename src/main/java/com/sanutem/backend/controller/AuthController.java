@@ -1,6 +1,7 @@
 package com.sanutem.backend.controller;
 
 import com.sanutem.backend.dto.*;
+import com.sanutem.backend.model.Pets;
 import com.sanutem.backend.model.Users;
 import com.sanutem.backend.repository.PetsRepository;
 import com.sanutem.backend.repository.UsersRepository;
@@ -13,11 +14,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.OK;
 
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/auth")
 @AllArgsConstructor
@@ -26,6 +28,7 @@ public class AuthController {
     private final AuthService authService;
     private final RefreshTokenService refreshTokenService;
     private final UsersRepository usersRepository;
+    private final PetsRepository petsRepository;
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
@@ -64,28 +67,33 @@ public class AuthController {
     }
 
     @GetMapping("/user-profile/{username}/")
-    public Optional<Users> getUserDetails(@PathVariable String username){
+    public Optional<Users> getUserDetails(@PathVariable String username) {
         return usersRepository.findByUsername(username);
     }
 
     @DeleteMapping("/settings/{username}/")
-    public ResponseEntity<Void> deleteUser(@PathVariable String username){
+    public ResponseEntity<Void> deleteUser(@PathVariable String username) {
 
         Optional<Users> userToDelete = usersRepository.findByUsername(username);
         authService.deleteUser(username, userToDelete);
 
-        if(userToDelete!=null){
+        if (userToDelete != null) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/user-data/{username}/")
-    public Optional<Users> getUserProfileData(@PathVariable String username){
+    public Optional<Users> getUserProfileData(@PathVariable String username) {
 
         Optional<Users> user = usersRepository.findByUsername(username);
         System.out.println(user.get().getHomeAddress());
         return usersRepository.findByUsername(username);
+    }
+
+    @GetMapping("/user-profile/{username}/pets")
+    public List<Pets> getPets(@PathVariable String username) {
+        return petsRepository.getPetsByUsername(username);
     }
 
 }

@@ -75,6 +75,9 @@ public class AuthService {
         pet.setBreed(registerPetRequest.getBreed());
         //pet.setBirthday(LocalDate.parse(registerPetRequest.getBirthday()));
         pet.setSex(registerPetRequest.getSex());
+        pet.setMedicalHistory(registerPetRequest.getMedical_history());
+        pet.setSurgeries(registerPetRequest.getSurgeries());
+        pet.setMedicines(registerPetRequest.getMedicines());
         pet.setNameUser(registerPetRequest.getNameUser());
 
         petsRepository.save(pet);
