@@ -26,8 +26,6 @@ public class AuthController {
     private final AuthService authService;
     private final RefreshTokenService refreshTokenService;
     private final UsersRepository usersRepository;
-    private final PetsRepository petsRepository;
-    private final VerificationTokenRepository verificationTokenRepository;
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
@@ -65,7 +63,7 @@ public class AuthController {
         return ResponseEntity.status(OK).body("Refresh Token Deleted Successfully!!");
     }
 
-    @GetMapping("/user-profile/{username}/") //VER ESTO DE ACA
+    @GetMapping("/user-profile/{username}/")
     public Optional<Users> getUserDetails(@PathVariable String username){
         return usersRepository.findByUsername(username);
     }
@@ -82,5 +80,12 @@ public class AuthController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/user-data/{username}/")
+    public Optional<Users> getUserProfileData(@PathVariable String username){
+
+        Optional<Users> user = usersRepository.findByUsername(username);
+        System.out.println(user.get().getHomeAddress());
+        return usersRepository.findByUsername(username);
+    }
 
 }

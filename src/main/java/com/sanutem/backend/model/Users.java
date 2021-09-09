@@ -69,10 +69,10 @@ public class Users {
     )
     private LocalDate birthday;
     @Column(
-            name = "home_address"/*,
+            name = "address"/*,
             nullable = false*/
     )
-    private String home_address;
+    private String address;
     @Column(
             name = "password"/*,
             nullable = false*/
@@ -130,7 +130,7 @@ public class Users {
 
     public Users(Integer id, String dni, String firstName, String lastName,
                  String username, String email, String sex, LocalDate birthday,
-                 String home_address, String password, Instant created, boolean enabled,
+                 String address, String password, Instant created, boolean enabled,
                  String role, String blood_type, String medical_history, String surgeries,
                  String medicines, String license_number, String specialization) {
         this.id = id;
@@ -141,7 +141,7 @@ public class Users {
         this.email = email;
         this.sex = sex;
         this.birthday = birthday;
-        this.home_address = home_address;
+        this.address = address;
         this.password = password;
         this.created = created;
         this.enabled = enabled;
@@ -217,11 +217,11 @@ public class Users {
     }
 
     public String getHomeAddress() {
-        return home_address;
+        return address;
     }
 
-    public void setHomeAddress(String home_address) {
-        this.home_address = home_address;
+    public void setHomeAddress(String address) {
+        this.address = address;
     }
 
     public String getPassword() {
