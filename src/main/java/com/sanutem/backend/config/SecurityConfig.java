@@ -1,10 +1,8 @@
 package com.sanutem.backend.config;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,10 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
-
-@Configuration
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -35,10 +29,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
                 .authorizeRequests()
-                //.antMatchers("/api/auth/**").permitAll()
-                .antMatchers(GET,"/api/auth/**").permitAll()
-                .antMatchers(POST,"/user_with_roles/save/**").hasAnyAuthority("ROLE_ADMIN")
-                .anyRequest().authenticated();
+                .antMatchers("/api/auth/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated();
     }
 
     @Autowired
