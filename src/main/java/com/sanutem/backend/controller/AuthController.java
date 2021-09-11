@@ -73,7 +73,6 @@ public class AuthController {
 
     @DeleteMapping("/settings/{username}/")
     public ResponseEntity<Void> deleteUser(@PathVariable String username) {
-
         Optional<Users> userToDelete = usersRepository.findByUsername(username);
         authService.deleteUser(username, userToDelete);
 
@@ -85,7 +84,6 @@ public class AuthController {
 
     @GetMapping("/user-data/{username}/")
     public Optional<Users> getUserProfileData(@PathVariable String username) {
-
         Optional<Users> user = usersRepository.findByUsername(username);
         System.out.println(user.get().getHomeAddress());
         return usersRepository.findByUsername(username);
@@ -96,4 +94,10 @@ public class AuthController {
         return petsRepository.getPetsByUsername(username);
     }
 
+    @PostMapping("/update/")
+    public ResponseEntity<String> update(@RequestBody UpdateRequest updateRequest) {
+        authService.update(updateRequest);
+        return new ResponseEntity<>("User Update Successful",
+                OK);
+    }
 }
