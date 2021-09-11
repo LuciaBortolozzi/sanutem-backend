@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +15,7 @@ import java.security.*;
 import java.security.cert.CertificateException;
 import java.sql.Date;
 import java.time.Instant;
+import java.util.stream.Collectors;
 
 import static io.jsonwebtoken.Jwts.parserBuilder;
 import static java.util.Date.from;
@@ -44,6 +46,7 @@ public class JwtProvider {
                 .setIssuedAt(from(Instant.now()))
                 .signWith(getPrivateKey())
                 .setExpiration(Date.from(Instant.now().plusMillis(jwtExpirationInMillis)))
+                .claim("roles", principal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .compact();
     }
 
