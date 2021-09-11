@@ -1,6 +1,5 @@
 package com.sanutem.backend.security;
 
-import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,8 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-import static io.jsonwebtoken.Jwts.parserBuilder;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -36,12 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (StringUtils.hasText(jwt) && jwtProvider.validateToken(jwt)) {
             String username = jwtProvider.getUsernameFromJwt(jwt);
 
-            System.out.println("TOKEN:" + jwt);
-            System.out.println("USERNAME:" + username);
-
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-            System.out.println("USERNAME:" + username);
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails,
                     null, userDetails.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
