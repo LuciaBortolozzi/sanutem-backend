@@ -106,26 +106,15 @@ public class AuthService {
     public Users getCurrentUser() {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.
                 getContext().getAuthentication().getPrincipal();
-
-        Users us = userRepository.findByUsername(principal.getUsername());
-        Optional<Users> usu = Optional.ofNullable(us);
-        return usu.orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
+        return userRepository.findByUsername(principal.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
     }
-    /*
+
     private void fetchUserAndEnable(VerificationToken verificationToken) {
         String username = verificationToken.getUser().getUsername();
         Users user = userRepository.findByUsername(username).orElseThrow(() -> new AppException("User not found with name - " + username));
         user.setEnabled(true);
         userRepository.save(user);
-    }*/
-
-    private void fetchUserAndEnable(VerificationToken verificationToken) {
-        String username = verificationToken.getUser().getUsername();
-        Users user = userRepository.findByUsername(username);
-        Optional<Users> usu = Optional.ofNullable(user);
-        Users user2 = usu.orElseThrow(() -> new AppException("User not found with name - " + username));
-        user2.setEnabled(true);
-        userRepository.save(user2);
     }
 
     private String generateVerificationToken(Users user) {
