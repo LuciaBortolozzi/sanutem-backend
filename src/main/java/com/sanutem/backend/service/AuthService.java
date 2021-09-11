@@ -1,13 +1,9 @@
 package com.sanutem.backend.service;
 
-import com.sanutem.backend.dto.AuthenticationResponse;
-import com.sanutem.backend.dto.LoginRequest;
-import com.sanutem.backend.dto.RefreshTokenRequest;
-import com.sanutem.backend.dto.RegisterRequest;
+import com.sanutem.backend.dto.*;
 import com.sanutem.backend.exception.AppException;
-import com.sanutem.backend.model.NotificationEmail;
-import com.sanutem.backend.model.Users;
-import com.sanutem.backend.model.VerificationToken;
+import com.sanutem.backend.model.*;
+import com.sanutem.backend.repository.PetsRepository;
 import com.sanutem.backend.repository.UsersRepository;
 import com.sanutem.backend.repository.VerificationTokenRepository;
 import com.sanutem.backend.security.JwtProvider;
@@ -23,6 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,6 +31,7 @@ public class AuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final UsersRepository userRepository;
+    private final PetsRepository petsRepository;
     private final VerificationTokenRepository verificationTokenRepository;
     private final MailService mailService;
     private final AuthenticationManager authenticationManager;
@@ -44,8 +43,21 @@ public class AuthService {
         user.setUsername(registerRequest.getUsername());
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        user.setFirstName(registerRequest.getFirstName());
+        user.setLastName(registerRequest.getLastName());
+        user.setDni(registerRequest.getDni());
+        user.setHomeAddress(registerRequest.getAddress());
+        //user.setBirthday(LocalDate.parse(registerRequest.getBirthday()));
+        user.setSex(registerRequest.getSex());
         user.setCreated(Instant.now());
         user.setEnabled(false);
+        user.setRole(registerRequest.getRole());
+        user.setBlood_type(registerRequest.getBlood_type());
+        user.setMedical_history(registerRequest.getMedical_history());
+        user.setSurgeries(registerRequest.getSurgeries());
+        user.setMedicines(registerRequest.getMedicines());
+        user.setLicense_number(registerRequest.getLicense_number());
+        user.setSpecialization(registerRequest.getSpecialization());
 
         userRepository.save(user);
 
@@ -54,6 +66,40 @@ public class AuthService {
                 user.getEmail(), "Gracias por registrarse en Sanutem, " +
                 "por favor active su cuenta haciendo click en el siguiente link : " +
                 "http://localhost:8080/api/auth/accountVerification/" + token));
+    }
+
+    public void registerPet(RegisterPetRequest registerPetRequest) {
+        Pets pet = new Pets();
+        pet.setName(registerPetRequest.getName());
+        pet.setSpecies(registerPetRequest.getSpecies());
+        pet.setBreed(registerPetRequest.getBreed());
+        //pet.setBirthday(LocalDate.parse(registerPetRequest.getBirthday()));
+        pet.setSex(registerPetRequest.getSex());
+        pet.setMedicalHistory(registerPetRequest.getMedical_history());
+        pet.setSurgeries(registerPetRequest.getSurgeries());
+        pet.setMedicines(registerPetRequest.getMedicines());
+        pet.setNameUser(registerPetRequest.getNameUser());
+
+        petsRepository.save(pet);
+    }
+
+    public void deleteUser(String username, Optional<Users> userToDelete ) {
+
+        if(userToDelete!=null){
+            List<Integer> idPets = petsRepository.findIdPetByUsername(username);
+
+            Integer idToken = verificationTokenRepository.findIdTokenByUsername(username);
+
+            if(idToken!=null){
+                verificationTokenRepository.deleteTokenByIdToken(Long.valueOf(idToken));
+            }
+            if(idPets.size()>0){
+                for(Integer id:idPets){
+                    petsRepository.deletePetByIdPet(id);
+                }
+            }
+        }
+        userRepository.deleteUserById(userToDelete.get().getId());
     }
 
     @Transactional(readOnly = true)
@@ -124,5 +170,9 @@ public class AuthService {
     public boolean isLoggedIn() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
+    }
+
+    public void update(UpdateRequest updateRequest) {
+        userRepository.updateUserByUsername(updateRequest.getEmail(),updateRequest.getFirstName(),updateRequest.getLastName(), updateRequest.getSex(), updateRequest.getUsername());
     }
 }

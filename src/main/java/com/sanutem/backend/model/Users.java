@@ -1,19 +1,12 @@
 package com.sanutem.backend.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 import javax.persistence.*;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity(name = "Users")
-@Data
-@AllArgsConstructor
 /*
 @Table(
         name = "users",
@@ -76,10 +69,10 @@ public class Users {
     )
     private LocalDate birthday;
     @Column(
-            name = "home_address"/*,
+            name = "address"/*,
             nullable = false*/
     )
-    private String home_address;
+    private String address;
     @Column(
             name = "password"/*,
             nullable = false*/
@@ -95,15 +88,51 @@ public class Users {
             nullable = false*/
     )
     private boolean enabled;
-    @ManyToMany
-    private Collection<Role> roles = new ArrayList();
+    @Column(
+            name = "role"/*,
+            nullable = false*/
+    )
+    private String role;
+
+    @Column(
+            name = "blood_type"/*,
+            nullable = false*/
+    )
+    private String blood_type;
+    @Column(
+            name = "medical_history"/*,
+            nullable = false*/
+    )
+    private String medical_history;
+    @Column(
+            name = "surgeries"/*,
+            nullable = false*/
+    )
+    private String surgeries;
+    @Column(
+            name = "medicines"/*,
+            nullable = false*/
+    )
+    private String medicines;
+    @Column(
+            name = "license_number"/*,
+            nullable = false*/
+    )
+    private String license_number;
+    @Column(
+            name = "specialization"/*,
+            nullable = false*/
+    )
+    private String specialization;
 
     public Users() {
     }
 
     public Users(Integer id, String dni, String firstName, String lastName,
                  String username, String email, String sex, LocalDate birthday,
-                 String home_address, String password, Instant created, boolean enabled) {
+                 String address, String password, Instant created, boolean enabled,
+                 String role, String blood_type, String medical_history, String surgeries,
+                 String medicines, String license_number, String specialization) {
         this.id = id;
         this.dni = dni;
         this.firstName = firstName;
@@ -112,15 +141,20 @@ public class Users {
         this.email = email;
         this.sex = sex;
         this.birthday = birthday;
-        this.home_address = home_address;
+        this.address = address;
         this.password = password;
         this.created = created;
         this.enabled = enabled;
+        this.role = role;
+        this.blood_type = blood_type;
+        this.medical_history = medical_history;
+        this.surgeries = surgeries;
+        this.medicines = medicines;
+        this.license_number = license_number;
+        this.specialization = specialization;
     }
 
-    public Integer getId() {
-        return id;
-    }
+    public Integer getId() {return id;}
 
     public void setId(Integer id) {
         this.id = id;
@@ -183,11 +217,11 @@ public class Users {
     }
 
     public String getHomeAddress() {
-        return home_address;
+        return address;
     }
 
-    public void setHomeAddress(String home_address) {
-        this.home_address = home_address;
+    public void setHomeAddress(String address) {
+        this.address = address;
     }
 
     public String getPassword() {
@@ -213,4 +247,32 @@ public class Users {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
+    public String getRole() {return role;}
+
+    public void setRole(String role) {this.role = role;}
+
+    public String getBlood_type() {return blood_type;}
+
+    public void setBlood_type(String blood_type) {this.blood_type = blood_type;}
+
+    public String getMedical_history() {return medical_history;}
+
+    public void setMedical_history(String medical_history) {this.medical_history = medical_history;}
+
+    public String getSurgeries() {return surgeries;}
+
+    public void setSurgeries(String surgeries) {this.surgeries = surgeries;}
+
+    public String getMedicines() {return medicines;}
+
+    public void setMedicines(String medicines) {this.medicines = medicines;}
+
+    public String getLicense_number() {return license_number;}
+
+    public void setLicense_number(String license_number) {this.license_number = license_number;}
+
+    public String getSpecialization() {return specialization;}
+
+    public void setSpecialization(String specialization) {this.specialization = specialization;}
 }
