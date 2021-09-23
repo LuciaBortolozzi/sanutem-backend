@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -99,5 +100,18 @@ public class AuthController {
         authService.update(updateRequest);
         return new ResponseEntity<>("User Update Successful",
                 OK);
+    }
+
+    @PostMapping("/link-receptionist")
+    public ResponseEntity<String> linkReceptionist(@RequestBody LinkReceptionistRequest linkReceptionistRequest) {
+
+        if(authService.linkReceptionist(linkReceptionistRequest)){
+
+            return new ResponseEntity<>("Link Receptionist Successful",
+                    OK);
+        }else {
+            return new ResponseEntity<>("The ID Receptionist does not exist",
+                    NOT_FOUND);
+        }
     }
 }
