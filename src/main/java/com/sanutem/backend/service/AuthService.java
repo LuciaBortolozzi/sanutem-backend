@@ -4,6 +4,7 @@ import com.sanutem.backend.dto.*;
 import com.sanutem.backend.exception.AppException;
 import com.sanutem.backend.model.*;
 import com.sanutem.backend.repository.PetsRepository;
+import com.sanutem.backend.repository.ProfessionalReceptionistRelRepository;
 import com.sanutem.backend.repository.UsersRepository;
 import com.sanutem.backend.repository.VerificationTokenRepository;
 import com.sanutem.backend.security.JwtProvider;
@@ -37,6 +38,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
+    private final ProfessionalReceptionistRelRepository professionalReceptionistRelRepository;
 
     public void signup(RegisterRequest registerRequest) {
         Users user = new Users();
@@ -81,6 +83,30 @@ public class AuthService {
         pet.setNameUser(registerPetRequest.getNameUser());
 
         petsRepository.save(pet);
+    }
+
+    public Boolean linkReceptionist(LinkReceptionistRequest linkReceptionistRequest) {
+
+        ProfessionalReceptionistRel professionalReceptionistRel = new ProfessionalReceptionistRel();
+        Boolean receptionistExist = false;
+
+        if(userRepository.findUsernameByID(Integer.parseInt(linkReceptionistRequest.getIdReceptionist()))!=null){
+
+            Integer idProfessional = userRepository.findIDByUsername(linkReceptionistRequest.getNameProf());
+
+            professionalReceptionistRel.setIdReceptionist(Integer.parseInt(linkReceptionistRequest.getIdReceptionist()));
+            professionalReceptionistRel.setIdProfessional(idProfessional);
+
+            if(professionalReceptionistRelRepository.findIDByIDProfessionalAndIDReceptionist(idProfessional,
+                    Integer.parseInt(linkReceptionistRequest.getIdReceptionist()) )==null){
+
+                professionalReceptionistRelRepository.save(professionalReceptionistRel);
+            }
+
+            receptionistExist = true;
+        }
+
+        return receptionistExist;
     }
 
     public void deleteUser(String username, Optional<Users> userToDelete ) {
