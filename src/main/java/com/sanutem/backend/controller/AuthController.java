@@ -1,11 +1,8 @@
 package com.sanutem.backend.controller;
 
 import com.sanutem.backend.dto.*;
-import com.sanutem.backend.model.Pets;
-import com.sanutem.backend.model.Users;
-import com.sanutem.backend.repository.PetsRepository;
-import com.sanutem.backend.repository.UsersRepository;
-import com.sanutem.backend.repository.VerificationTokenRepository;
+import com.sanutem.backend.model.*;
+import com.sanutem.backend.repository.*;
 import com.sanutem.backend.service.AuthService;
 import com.sanutem.backend.service.RefreshTokenService;
 import lombok.AllArgsConstructor;
@@ -30,6 +27,9 @@ public class AuthController {
     private final RefreshTokenService refreshTokenService;
     private final UsersRepository usersRepository;
     private final PetsRepository petsRepository;
+    private final ProvincesRepository provincesRepository;
+    private final SpecializationsRepository specializationsRepository;
+    private final HealthInsurancesRepository healthInsurancesRepository;
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
@@ -85,8 +85,6 @@ public class AuthController {
 
     @GetMapping("/user-data/{username}/")
     public Optional<Users> getUserProfileData(@PathVariable String username) {
-        Optional<Users> user = usersRepository.findByUsername(username);
-        System.out.println(user.get().getHomeAddress());
         return usersRepository.findByUsername(username);
     }
 
@@ -113,5 +111,29 @@ public class AuthController {
             return new ResponseEntity<>("The ID Receptionist does not exist",
                     NOT_FOUND);
         }
+    }
+
+    @GetMapping("/provinces-data/")
+    public String[] getProvinces() {
+        String[] provinces = provincesRepository.findAllProvinces();
+        return provinces;
+    }
+
+    @GetMapping("/specializations-data/")
+    public String[] getSpecializations() {
+        String[] specializations = specializationsRepository.findAllSpecializations();
+        return specializations;
+    }
+
+    @GetMapping("/healthInsurances-data/")
+    public String[] getHealthInsurances() {
+        String[] healthInsurances = healthInsurancesRepository.findAllHealthInsurances();
+        return healthInsurances;
+    }
+
+    @GetMapping("/search/{specialization}/{province}/{healthInsurance}/")
+    public Users[] search(@PathVariable String specialization,@PathVariable String province,@PathVariable String healthInsurance) {
+        Users[] users = usersRepository.findProfessionalBySpecializationAndProvinceAndHealthInsurance(specialization, province, healthInsurance);
+        return users;
     }
 }
