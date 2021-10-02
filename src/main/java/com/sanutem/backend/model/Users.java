@@ -124,6 +124,16 @@ public class Users {
             nullable = false*/
     )
     private String specialization;
+    @Column(
+            name = "province"/*,
+            nullable = false*/
+    )
+    private String province;
+    @Column(
+            name = "healthInsurances"/*,
+            nullable = false*/
+    )
+    private String healthInsurances;
 
     public Users() {
     }
@@ -132,7 +142,8 @@ public class Users {
                  String username, String email, String sex, LocalDate birthday,
                  String address, String password, Instant created, boolean enabled,
                  String role, String blood_type, String medical_history, String surgeries,
-                 String medicines, String license_number, String specialization) {
+                 String medicines, String license_number, String specialization,
+                 String province, String healthInsurances) {
         this.id = id;
         this.dni = dni;
         this.firstName = firstName;
@@ -152,6 +163,8 @@ public class Users {
         this.medicines = medicines;
         this.license_number = license_number;
         this.specialization = specialization;
+        this.province = province;
+        this.healthInsurances = healthInsurances;
     }
 
     public Integer getId() {return id;}
@@ -275,4 +288,12 @@ public class Users {
     public String getSpecialization() {return specialization;}
 
     public void setSpecialization(String specialization) {this.specialization = specialization;}
+
+    public String getProvince() {return province;}
+
+    public void setProvince(String province) {this.province = province;}
+
+    public String getHealthInsurances() {return healthInsurances;}
+
+    public void setHealthInsurances(String healthInsurances) {this.healthInsurances = healthInsurances;}
 }

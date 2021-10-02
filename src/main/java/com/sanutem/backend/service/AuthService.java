@@ -60,6 +60,8 @@ public class AuthService {
         user.setMedicines(registerRequest.getMedicines());
         user.setLicense_number(registerRequest.getLicense_number());
         user.setSpecialization(registerRequest.getSpecialization());
+        user.setProvince(registerRequest.getProvince());
+        user.setHealthInsurances(registerRequest.getHealthInsurances());
 
         userRepository.save(user);
 
