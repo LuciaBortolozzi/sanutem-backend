@@ -42,13 +42,33 @@ public class Appointments {
             nullable = false*/
     )
     private LocalTime hour;
+    @Column(
+            name = "freeAppointment"/*,
+            nullable = false*/
+    )
+    private Boolean freeAppointment;
+    @Column(
+            name = "userNamePatience"/*,
+            nullable = false*/
+    )
+    private String userNamePatience;
+    @Column(
+            name = "userNameProfessional"/*,
+            nullable = false*/
+    )
+    private String userNameProfessional;
 
     public Appointments() {}
 
-    public Appointments(Integer idAppointments, LocalDate date, LocalTime hour) {
+    public Appointments(Integer idAppointments, LocalDate date, LocalTime hour,
+                        Boolean freeAppointment, String userNamePatience,
+                        String userNameProfessional) {
         this.idAppointments = idAppointments;
         this.date = date;
         this.hour = hour;
+        this.freeAppointment = freeAppointment;
+        this.userNamePatience = userNamePatience;
+        this.userNameProfessional = userNameProfessional;
     }
 
     public Integer getIdAppointments() {
@@ -74,4 +94,16 @@ public class Appointments {
     public void setHour(LocalTime hour) {
         this.hour = hour;
     }
+
+    public Boolean getFreeAppointment() {return freeAppointment;}
+
+    public void setFreeAppointment(Boolean freeAppointment) {this.freeAppointment = freeAppointment;}
+
+    public String getUserNamePatience() {return userNamePatience;}
+
+    public void setUserNamePatience(String userNamePatience) {this.userNamePatience = userNamePatience;}
+
+    public String getUserNameProfessional() {return userNameProfessional;}
+
+    public void setUserNameProfessional(String userNameProfessional) {this.userNameProfessional = userNameProfessional;}
 }
