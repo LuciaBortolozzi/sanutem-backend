@@ -24,4 +24,6 @@ public class RegisterRequest {
     private String medicines;
     private String license_number;
     private String specialization;
+    private String province;
+    private String healthInsurances;
 }
