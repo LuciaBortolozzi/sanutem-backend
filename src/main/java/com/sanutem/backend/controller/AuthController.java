@@ -30,6 +30,7 @@ public class AuthController {
     private final ProvincesRepository provincesRepository;
     private final SpecializationsRepository specializationsRepository;
     private final HealthInsurancesRepository healthInsurancesRepository;
+    private final MonthsRepository monthsRepository;
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
@@ -135,5 +136,18 @@ public class AuthController {
     public Users[] search(@PathVariable String specialization,@PathVariable String province,@PathVariable String healthInsurance) {
         Users[] users = usersRepository.findProfessionalBySpecializationAndProvinceAndHealthInsurance(specialization, province, healthInsurance);
         return users;
+    }
+
+    @GetMapping("/months-data/")
+    public String[] getMonths() {
+        String[] months = monthsRepository.findAllMonths();
+        return months;
+    }
+
+    @PostMapping("/availability")
+    public ResponseEntity<String> availability(@RequestBody AvailabilityRequest availabilityRequest) {
+        authService.availability(availabilityRequest);
+        return new ResponseEntity<>("Availability Registration Successful",
+                OK);
     }
 }

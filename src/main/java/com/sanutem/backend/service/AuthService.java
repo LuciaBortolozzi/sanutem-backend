@@ -3,10 +3,7 @@ package com.sanutem.backend.service;
 import com.sanutem.backend.dto.*;
 import com.sanutem.backend.exception.AppException;
 import com.sanutem.backend.model.*;
-import com.sanutem.backend.repository.PetsRepository;
-import com.sanutem.backend.repository.ProfessionalReceptionistRelRepository;
-import com.sanutem.backend.repository.UsersRepository;
-import com.sanutem.backend.repository.VerificationTokenRepository;
+import com.sanutem.backend.repository.*;
 import com.sanutem.backend.security.JwtProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -39,6 +36,7 @@ public class AuthService {
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
     private final ProfessionalReceptionistRelRepository professionalReceptionistRelRepository;
+    private final ProfessionalAvailabilityRepository professionalAvailabilityRepository;
 
     public void signup(RegisterRequest registerRequest) {
         Users user = new Users();
@@ -191,5 +189,116 @@ public class AuthService {
 
     public void update(UpdateRequest updateRequest) {
         userRepository.updateUserByUsername(updateRequest.getEmail(),updateRequest.getFirstName(),updateRequest.getLastName(), updateRequest.getSex(), updateRequest.getUsername());
+    }
+
+    public void availability(AvailabilityRequest availabilityRequest) {
+        ProfessionalAvailability professionalAvailability = new ProfessionalAvailability();
+
+        professionalAvailability.setMonth(availabilityRequest.getMonth());
+
+        String days = new String();
+        days = daysSelection(availabilityRequest);
+        professionalAvailability.setWeekDays(days);
+
+        professionalAvailability.setDuration("30");
+
+        String hours = new String();
+        hours = rageTimeSelection(availabilityRequest);
+        professionalAvailability.setTimeRange(hours);
+
+        Integer idReceptionist = userRepository.findIDByUsername(availabilityRequest.getNameReceptionist());
+        Integer idProfessional = professionalReceptionistRelRepository.findIDProfessionalByIDReceptionist(idReceptionist);
+        String userNameProfessional = userRepository.findUsernameByID(idProfessional);
+        professionalAvailability.setUserNameProfessional(userNameProfessional);
+
+        professionalAvailabilityRepository.save(professionalAvailability);
+    }
+
+    public String daysSelection(AvailabilityRequest availabilityRequest){
+
+        String days = new String();
+        if(availabilityRequest.getDays()[0].equals("true")){
+
+            days = days + "Monday;";
+        }
+        if(availabilityRequest.getDays()[1].equals("true")){
+
+            days = days + "Thursday;";
+        }
+        if(availabilityRequest.getDays()[2].equals("true")){
+
+            days = days + "Wednesday;";
+        }
+        if(availabilityRequest.getDays()[3].equals("true")){
+
+            days = days + "Tuesday;";
+        }
+        if(availabilityRequest.getDays()[4].equals("true")){
+
+            days = days + "Friday;";
+        }
+        if(availabilityRequest.getDays()[5].equals("true")){
+
+            days = days + "Saturday;";
+        }
+        return days;
+    }
+
+    public String rageTimeSelection(AvailabilityRequest availabilityRequest){
+
+        String hours = new String();
+        if(availabilityRequest.getHours()[0].equals("true")){
+
+            hours = hours + "range_1;";
+        }
+        if(availabilityRequest.getHours()[1].equals("true")){
+
+            hours = hours + "range_2;";
+        }
+        if(availabilityRequest.getHours()[2].equals("true")){
+
+            hours = hours + "range_3;";
+        }
+        if(availabilityRequest.getHours()[3].equals("true")){
+
+            hours = hours + "range_4;";
+        }
+        if(availabilityRequest.getHours()[4].equals("true")){
+
+            hours = hours + "range_5;";
+        }
+        if(availabilityRequest.getHours()[5].equals("true")){
+
+            hours = hours + "range_6;";
+        }
+        if(availabilityRequest.getHours()[6].equals("true")){
+
+            hours = hours + "range_7;";
+        }
+        if(availabilityRequest.getHours()[7].equals("true")){
+
+            hours = hours + "range_8;";
+        }
+        if(availabilityRequest.getHours()[8].equals("true")){
+
+            hours = hours + "range_9;";
+        }
+        if(availabilityRequest.getHours()[9].equals("true")){
+
+            hours = hours + "range_10;";
+        }
+        if(availabilityRequest.getHours()[10].equals("true")){
+
+            hours = hours + "range_11;";
+        }
+        if(availabilityRequest.getHours()[11].equals("true")){
+
+            hours = hours + "range_12;";
+        }
+        if(availabilityRequest.getHours()[12].equals("true")){
+
+            hours = hours + "range_13;";
+        }
+        return hours;
     }
 }

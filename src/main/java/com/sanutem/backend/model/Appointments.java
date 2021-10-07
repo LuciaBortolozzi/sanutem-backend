@@ -48,10 +48,10 @@ public class Appointments {
     )
     private Boolean freeAppointment;
     @Column(
-            name = "userNamePatience"/*,
+            name = "userNamePatient"/*,
             nullable = false*/
     )
-    private String userNamePatience;
+    private String userNamePatient;
     @Column(
             name = "userNameProfessional"/*,
             nullable = false*/
@@ -61,13 +61,13 @@ public class Appointments {
     public Appointments() {}
 
     public Appointments(Integer idAppointments, LocalDate date, LocalTime hour,
-                        Boolean freeAppointment, String userNamePatience,
+                        Boolean freeAppointment, String userNamePatient,
                         String userNameProfessional) {
         this.idAppointments = idAppointments;
         this.date = date;
         this.hour = hour;
         this.freeAppointment = freeAppointment;
-        this.userNamePatience = userNamePatience;
+        this.userNamePatient = userNamePatient;
         this.userNameProfessional = userNameProfessional;
     }
 
@@ -99,9 +99,9 @@ public class Appointments {
 
     public void setFreeAppointment(Boolean freeAppointment) {this.freeAppointment = freeAppointment;}
 
-    public String getUserNamePatience() {return userNamePatience;}
+    public String getUserNamePatient() {return userNamePatient;}
 
-    public void setUserNamePatience(String userNamePatience) {this.userNamePatience = userNamePatience;}
+    public void setUserNamePatient(String userNamePatient) {this.userNamePatient = userNamePatient;}
 
     public String getUserNameProfessional() {return userNameProfessional;}
 
