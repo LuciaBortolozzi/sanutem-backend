@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -145,7 +146,7 @@ public class AuthController {
     }
 
     @PostMapping("/availability")
-    public ResponseEntity<String> availability(@RequestBody AvailabilityRequest availabilityRequest) {
+    public ResponseEntity<String> availability(@RequestBody AvailabilityRequest availabilityRequest) throws ParseException {
         authService.availability(availabilityRequest);
         return new ResponseEntity<>("Availability Registration Successful",
                 OK);

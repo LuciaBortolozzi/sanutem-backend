@@ -36,12 +36,12 @@ public class Appointments {
             name = "date"/*,
             nullable = false*/
     )
-    private LocalDate date;
+    private String date;
     @Column(
             name = "hour"/*,
             nullable = false*/
     )
-    private LocalTime hour;
+    private String hour;
     @Column(
             name = "freeAppointment"/*,
             nullable = false*/
@@ -60,7 +60,7 @@ public class Appointments {
 
     public Appointments() {}
 
-    public Appointments(Integer idAppointments, LocalDate date, LocalTime hour,
+    public Appointments(Integer idAppointments, String date, String hour,
                         Boolean freeAppointment, String userNamePatient,
                         String userNameProfessional) {
         this.idAppointments = idAppointments;
@@ -79,19 +79,19 @@ public class Appointments {
         this.idAppointments = idAppointments;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public LocalTime getHour() {
+    public String getHour() {
         return hour;
     }
 
-    public void setHour(LocalTime hour) {
+    public void setHour(String hour) {
         this.hour = hour;
     }
 
