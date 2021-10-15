@@ -8,4 +8,7 @@ public interface ProfessionalReceptionistRelRepository extends JpaRepository<Pro
 
     @Query("SELECT p.idProfRecep FROM ProfessionalReceptionistRel p WHERE p.idProfessional = ?1 AND p.idReceptionist = ?2 ")
     Integer findIDByIDProfessionalAndIDReceptionist(Integer idProfessional, Integer idReceptionist);
+
+    @Query("SELECT p.idProfessional FROM ProfessionalReceptionistRel p WHERE p.idReceptionist = ?1 ")
+    Integer findIDProfessionalByIDReceptionist(Integer idReceptionist);
 }

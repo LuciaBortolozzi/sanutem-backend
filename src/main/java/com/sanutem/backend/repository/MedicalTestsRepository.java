@@ -2,6 +2,8 @@ package com.sanutem.backend.repository;
 
 import com.sanutem.backend.model.MedicalTests;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface MedicalTestsRepository extends JpaRepository<MedicalTests, Integer> {
+@Repository
+public interface MedicalTestsRepository extends JpaRepository<MedicalTests, String> {
 }

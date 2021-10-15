@@ -1,96 +1,63 @@
 package com.sanutem.backend.model;
 
-import javax.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
-@Entity(name = "MedicalTests")
+@Entity
+@Table(name = "medicalTests")
 public class MedicalTests {
-
     @Id
-    @SequenceGenerator(
-            name="medical_test_sequence",
-            sequenceName = "medical_test_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = SEQUENCE,
-            generator = "medical_test_sequence"
-    )
-    @Column(
-            name = "idMedicalTest",
-            updatable = false
-    )
-    private Integer idMedicalTest;
-    @Column(
-            name = "id",
-            updatable = false
-    )
-    private Integer id;//hace referencia al id del paciente humano, hay que revisar las annotations: @ManyToOne @OneToMany
-    @Column(
-            name = "prescription"/*,
-            nullable = false*/
-    )
-    private String prescription;
-    @Column(
-            name = "details"/*,
-            nullable = false*/
-    )
-    private String details;
-    @Column(
-            name = "idProfessional"/*,
-            nullable = false*/
-    )
-    private Integer idProfessional;//hay que revisar las annotations: @ManyToOne @OneToMany
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
 
-    public MedicalTests(){}
+    private String name;
 
-    public MedicalTests(Integer idMedicalTest, Integer id,
-                        String prescription, String details, Integer idProfessional) {
-        this.idMedicalTest = idMedicalTest;
-        this.id = id;
-        this.prescription = prescription;
-        this.details = details;
-        this.idProfessional = idProfessional;
+    private String type;
+
+    @Lob
+    private byte[] data;
+
+    public MedicalTests() {
     }
 
-    public Integer getIdMedicalTest() {
-        return idMedicalTest;
+    public MedicalTests(String name, String type, byte[] data) {
+        this.name = name;
+        this.type = type;
+        this.data = data;
     }
 
-    public void setIdMedicalTest(Integer idMedicalTest) {
-        this.idMedicalTest = idMedicalTest;
-    }
-
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public String getName() {
+        return name;
     }
 
-    public String getPrescription() {
-        return prescription;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setPrescription(String prescription) {
-        this.prescription = prescription;
+    public String getType() {
+        return type;
     }
 
-    public String getDetails() {
-        return details;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public void setDetails(String details) {
-        this.details = details;
+    public byte[] getData() {
+        return data;
     }
 
-    public Integer getIdProfessional() {
-        return idProfessional;
-    }
-
-    public void setIdProfessional(Integer idProfessional) {
-        this.idProfessional = idProfessional;
+    public void setData(byte[] data) {
+        this.data = data;
     }
 }

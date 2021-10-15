@@ -36,22 +36,22 @@ public class Appointments {
             name = "date"/*,
             nullable = false*/
     )
-    private LocalDate date;
+    private String date;
     @Column(
             name = "hour"/*,
             nullable = false*/
     )
-    private LocalTime hour;
+    private String hour;
     @Column(
             name = "freeAppointment"/*,
             nullable = false*/
     )
     private Boolean freeAppointment;
     @Column(
-            name = "userNamePatience"/*,
+            name = "userNamePatient"/*,
             nullable = false*/
     )
-    private String userNamePatience;
+    private String userNamePatient;
     @Column(
             name = "userNameProfessional"/*,
             nullable = false*/
@@ -60,14 +60,14 @@ public class Appointments {
 
     public Appointments() {}
 
-    public Appointments(Integer idAppointments, LocalDate date, LocalTime hour,
-                        Boolean freeAppointment, String userNamePatience,
+    public Appointments(Integer idAppointments, String date, String hour,
+                        Boolean freeAppointment, String userNamePatient,
                         String userNameProfessional) {
         this.idAppointments = idAppointments;
         this.date = date;
         this.hour = hour;
         this.freeAppointment = freeAppointment;
-        this.userNamePatience = userNamePatience;
+        this.userNamePatient = userNamePatient;
         this.userNameProfessional = userNameProfessional;
     }
 
@@ -79,19 +79,19 @@ public class Appointments {
         this.idAppointments = idAppointments;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public LocalTime getHour() {
+    public String getHour() {
         return hour;
     }
 
-    public void setHour(LocalTime hour) {
+    public void setHour(String hour) {
         this.hour = hour;
     }
 
@@ -99,9 +99,9 @@ public class Appointments {
 
     public void setFreeAppointment(Boolean freeAppointment) {this.freeAppointment = freeAppointment;}
 
-    public String getUserNamePatience() {return userNamePatience;}
+    public String getUserNamePatient() {return userNamePatient;}
 
-    public void setUserNamePatience(String userNamePatience) {this.userNamePatience = userNamePatience;}
+    public void setUserNamePatient(String userNamePatient) {this.userNamePatient = userNamePatient;}
 
     public String getUserNameProfessional() {return userNameProfessional;}
 

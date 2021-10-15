@@ -1,12 +1,12 @@
 package com.sanutem.backend.service;
 
 import com.sanutem.backend.dto.*;
+import com.sanutem.backend.enums.monthsEnum;
+import com.sanutem.backend.enums.daysEnum;
+import com.sanutem.backend.enums.timeRangeEnum;
 import com.sanutem.backend.exception.AppException;
 import com.sanutem.backend.model.*;
-import com.sanutem.backend.repository.PetsRepository;
-import com.sanutem.backend.repository.ProfessionalReceptionistRelRepository;
-import com.sanutem.backend.repository.UsersRepository;
-import com.sanutem.backend.repository.VerificationTokenRepository;
+import com.sanutem.backend.repository.*;
 import com.sanutem.backend.security.JwtProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -19,17 +19,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.*;
+import java.util.*;
+import java.text.*;
 
 @Service
 @AllArgsConstructor
 @Transactional
 public class AuthService {
 
+    private final GeneralParameterRepository generalParameterRepository;
     private final PasswordEncoder passwordEncoder;
     private final UsersRepository userRepository;
     private final PetsRepository petsRepository;
@@ -39,6 +38,8 @@ public class AuthService {
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
     private final ProfessionalReceptionistRelRepository professionalReceptionistRelRepository;
+    private final ProfessionalAvailabilityRepository professionalAvailabilityRepository;
+    private final AppointmentsRepository appointmentsRepository;
 
     public void signup(RegisterRequest registerRequest) {
         Users user = new Users();
@@ -191,5 +192,227 @@ public class AuthService {
 
     public void update(UpdateRequest updateRequest) {
         userRepository.updateUserByUsername(updateRequest.getEmail(),updateRequest.getFirstName(),updateRequest.getLastName(), updateRequest.getSex(), updateRequest.getUsername());
+    }
+
+    public void availability(AvailabilityRequest availabilityRequest) throws ParseException {
+        ProfessionalAvailability professionalAvailability = new ProfessionalAvailability();
+        ProfessionalAvailability professionalAvailabilityAux = new ProfessionalAvailability();
+
+        professionalAvailability.setMonth(availabilityRequest.getMonth());
+
+        String days = new String();
+        days = daysSelection(availabilityRequest);
+        professionalAvailability.setWeekDays(days);
+
+        professionalAvailability.setDuration("30");
+
+        String hours = new String();
+        hours = rageTimeSelection(availabilityRequest);
+        professionalAvailability.setTimeRange(hours);
+
+        Integer idReceptionist = userRepository.findIDByUsername(availabilityRequest.getNameReceptionist());
+        Integer idProfessional = professionalReceptionistRelRepository.findIDProfessionalByIDReceptionist(idReceptionist);
+        String userNameProfessional = userRepository.findUsernameByID(idProfessional);
+        professionalAvailability.setUserNameProfessional(userNameProfessional);
+
+        professionalAvailabilityAux = professionalAvailabilityRepository.getProfessionalAvailabilityByMonthAndUserNameProfessional(availabilityRequest.getMonth(), userNameProfessional);
+        if(professionalAvailabilityAux==null){
+
+            createNewAppointments(professionalAvailability);
+            professionalAvailabilityRepository.save(professionalAvailability);
+        }
+    }
+
+    public void createNewAppointments(ProfessionalAvailability professionalAvailability) throws ParseException {
+
+        String[] timeRange = professionalAvailability.getTimeRange().split(";");
+        String[] rageTimeToHours = rageTimeToHours(timeRange);
+        Integer months = monthsEnum.MONTH.findMonthValueByMonthName(professionalAvailability.getMonth());
+        Integer monthsDays = numberOfDaysInMonth(months);
+
+        Date currentYear=new Date();
+
+        for(int i=1;i<=monthsDays;i++){
+
+            Calendar calendar = Calendar.getInstance();
+            String input_date= i + "/" + months + "/" + calendar.get(Calendar.YEAR);
+            SimpleDateFormat format1=new SimpleDateFormat("dd/MM/yyyy");
+            Date dt1=format1.parse(input_date);
+            Calendar c = Calendar.getInstance();
+            c.setTime(dt1);
+            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+
+            String dayOfWeekName = daysEnum.DAY.findDayNameByDayValue(dayOfWeek);
+
+            if(professionalAvailability.getWeekDays().contains(dayOfWeekName)){
+
+                for(String RT:rageTimeToHours){
+
+                    if(RT!=null){
+                        Appointments appointments = new Appointments();
+                        appointments.setFreeAppointment(true);
+                        appointments.setDate(input_date);
+                        appointments.setHour(RT);
+                        appointments.setUserNameProfessional(professionalAvailability.getUserNameProfessional());
+                        appointmentsRepository.save(appointments);
+                    }
+                }
+            }
+        }
+    }
+
+    public static int numberOfDaysInMonth(int month){
+
+        int daysNumber=-1;
+
+        switch(month){
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                daysNumber=31;
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                daysNumber=30;
+                break;
+            case 2:
+
+                Date currentYear=new Date();
+                if(isLeapYear(1900 + currentYear.getYear())){
+                    daysNumber=29;
+                }else{
+                    daysNumber=28;
+                }
+                break;
+
+        }
+
+        return daysNumber;
+    }
+
+    public static boolean isLeapYear(int anio) {
+
+        GregorianCalendar calendar = new GregorianCalendar();
+        boolean isLeapYear = false;
+        if (calendar.isLeapYear(anio)) {
+            isLeapYear = true;
+        }
+        return isLeapYear;
+
+    }
+
+    public String[] rageTimeToHours(String[] timeRange){
+
+        String[] rageTimeToHours = new String[100];
+        Integer appointmentDuration = generalParameterRepository.getDurationValueByDurationDescription("appointmentDuration");
+        Integer cont = 1;
+
+        for(String TR :timeRange){
+            Integer minutes = 0;
+            String rageValue = timeRangeEnum.RANGETIME.findTimeRangeValueByTimeRangeName(TR);
+            String[] trsep = rageValue.split("-");
+
+            while(minutes<60){
+
+                rageTimeToHours[cont] = (String.format("%02d", Integer.parseInt(trsep[0])) + ":" + String.format("%02d",minutes));
+                cont = cont+1;
+                minutes = minutes + appointmentDuration;
+            }
+        }
+        return rageTimeToHours;
+    }
+
+    public String daysSelection(AvailabilityRequest availabilityRequest){
+
+        String days = new String();
+        if(availabilityRequest.getDays()[0].equals("true")){
+
+            days = days + "Monday;";
+        }
+        if(availabilityRequest.getDays()[1].equals("true")){
+
+            days = days + "Tuesday;";
+        }
+        if(availabilityRequest.getDays()[2].equals("true")){
+
+            days = days + "Wednesday;";
+        }
+        if(availabilityRequest.getDays()[3].equals("true")){
+
+            days = days + "Thursday;";
+        }
+        if(availabilityRequest.getDays()[4].equals("true")){
+
+            days = days + "Friday;";
+        }
+        if(availabilityRequest.getDays()[5].equals("true")){
+
+            days = days + "Saturday;";
+        }
+        return days;
+    }
+
+    public String rageTimeSelection(AvailabilityRequest availabilityRequest){
+
+        String hours = new String();
+        if(availabilityRequest.getHours()[0].equals("true")){
+
+            hours = hours + "range_1;";
+        }
+        if(availabilityRequest.getHours()[1].equals("true")){
+
+            hours = hours + "range_2;";
+        }
+        if(availabilityRequest.getHours()[2].equals("true")){
+
+            hours = hours + "range_3;";
+        }
+        if(availabilityRequest.getHours()[3].equals("true")){
+
+            hours = hours + "range_4;";
+        }
+        if(availabilityRequest.getHours()[4].equals("true")){
+
+            hours = hours + "range_5;";
+        }
+        if(availabilityRequest.getHours()[5].equals("true")){
+
+            hours = hours + "range_6;";
+        }
+        if(availabilityRequest.getHours()[6].equals("true")){
+
+            hours = hours + "range_7;";
+        }
+        if(availabilityRequest.getHours()[7].equals("true")){
+
+            hours = hours + "range_8;";
+        }
+        if(availabilityRequest.getHours()[8].equals("true")){
+
+            hours = hours + "range_9;";
+        }
+        if(availabilityRequest.getHours()[9].equals("true")){
+
+            hours = hours + "range_10;";
+        }
+        if(availabilityRequest.getHours()[10].equals("true")){
+
+            hours = hours + "range_11;";
+        }
+        if(availabilityRequest.getHours()[11].equals("true")){
+
+            hours = hours + "range_12;";
+        }
+        if(availabilityRequest.getHours()[12].equals("true")){
+
+            hours = hours + "range_13;";
+        }
+        return hours;
     }
 }
