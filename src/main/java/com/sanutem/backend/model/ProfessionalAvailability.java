@@ -39,7 +39,7 @@ public class ProfessionalAvailability {
             nullable = false*/
             //valor fijo de 30 minutos
     )
-    private Boolean duration;
+    private String duration;
     @Column(
             name = "month"/*,
             nullable = false*/
@@ -52,7 +52,7 @@ public class ProfessionalAvailability {
     private String userNameProfessional;
 
     public ProfessionalAvailability(Integer idAppointmentsProfAvailability,
-                                    String weekDays, String timeRange, Boolean duration,
+                                    String weekDays, String timeRange, String duration,
                                     String month, String userNameProfessional) {
         this.idAppointmentsProfAvailability = idAppointmentsProfAvailability;
         this.weekDays = weekDays;
@@ -89,11 +89,11 @@ public class ProfessionalAvailability {
         this.timeRange = timeRange;
     }
 
-    public Boolean getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(Boolean duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
