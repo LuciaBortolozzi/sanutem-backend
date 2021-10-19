@@ -28,6 +28,7 @@ public class AuthController {
     private final RefreshTokenService refreshTokenService;
     private final UsersRepository usersRepository;
     private final PetsRepository petsRepository;
+    private final AppointmentsRepository appointmentsRepository;
     private final ProvincesRepository provincesRepository;
     private final SpecializationsRepository specializationsRepository;
     private final HealthInsurancesRepository healthInsurancesRepository;
@@ -93,6 +94,11 @@ public class AuthController {
     @GetMapping("/user-profile/{username}/pets")
     public List<Pets> getPets(@PathVariable String username) {
         return petsRepository.getPetsByUsername(username);
+    }
+
+    @GetMapping("/user-profile/{username}/search/{professional}/schedule")
+    public List<Appointments> getAppointments(@PathVariable String username) {
+        return appointmentsRepository.getAppointmentsByUsername(username);
     }
 
     @PostMapping("/update/")
