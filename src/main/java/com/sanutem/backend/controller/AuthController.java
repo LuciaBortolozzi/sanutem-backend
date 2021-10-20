@@ -97,8 +97,15 @@ public class AuthController {
     }
 
     @GetMapping("/user-profile/{username}/search/{professional}/schedule")
-    public List<Appointments> getAppointments(@PathVariable String username) {
-        return appointmentsRepository.getAppointmentsByUsername(username);
+    public List<Appointments> getAppointments(@PathVariable String professional) {
+        return appointmentsRepository.getAppointmentsByUsername(professional);
+    }
+
+    @PostMapping("/user-profile/{username}/search/{professional}/schedule/{id}")
+    public ResponseEntity<String> scheduleAppointment(@RequestBody ScheduleRequest scheduleRequest) {
+        appointmentsRepository.scheduleAppointmentById(scheduleRequest.getUserNamePatient(), scheduleRequest.getIdAppointments());
+        return new ResponseEntity<>("Schedule Successful",
+                OK);
     }
 
     @PostMapping("/update/")
