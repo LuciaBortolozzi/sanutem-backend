@@ -204,8 +204,6 @@ public class AuthService {
         days = daysSelection(availabilityRequest);
         professionalAvailability.setWeekDays(days);
 
-        professionalAvailability.setDuration("30");
-
         String hours = new String();
         hours = rageTimeSelection(availabilityRequest);
         professionalAvailability.setTimeRange(hours);
