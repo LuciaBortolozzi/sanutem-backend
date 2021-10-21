@@ -119,6 +119,14 @@ public class AuthController {
 
     @PostMapping("/user-profile/{username}/search/{professional}/schedule/{id}")
     public ResponseEntity<String> scheduleAppointment(@RequestBody ScheduleRequest scheduleRequest) {
+
+        ProfessionalPatientRel professionalPatientRel = new ProfessionalPatientRel();
+        Integer idPatient = usersRepository.findIDByUsername(scheduleRequest.getUserNamePatient());
+        Integer idProfessional = usersRepository.findIDByUsername(scheduleRequest.getUserNameProfessional());
+        professionalPatientRel.setIdPatient(idPatient);
+        professionalPatientRel.setIdProfessional(idProfessional);
+        professionalPatientRelRepository.save(professionalPatientRel);
+
         appointmentsRepository.scheduleAppointmentById(scheduleRequest.getUserNamePatient(), scheduleRequest.getIdAppointments());
         return new ResponseEntity<>("Schedule Successful",
                 OK);
