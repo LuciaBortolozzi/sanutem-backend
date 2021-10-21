@@ -16,7 +16,7 @@ public class MedicalTests {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-
+    private String username;
     private String name;
 
     private String type;
@@ -27,7 +27,8 @@ public class MedicalTests {
     public MedicalTests() {
     }
 
-    public MedicalTests(String name, String type, byte[] data) {
+    public MedicalTests(String username, String name, String type, byte[] data) {
+        this.username = username;
         this.name = name;
         this.type = type;
         this.data = data;
@@ -39,6 +40,14 @@ public class MedicalTests {
 
     public String getName() {
         return name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setName(String name) {

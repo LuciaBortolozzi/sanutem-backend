@@ -17,4 +17,7 @@ public interface AppointmentsRepository extends JpaRepository<Appointments, Inte
 
     @Query("SELECT a FROM Appointments a WHERE a.userNameProfessional = ?1")
     List<Appointments> getAppointmentsByUsername(String userNameProfessional);
+
+    @Query("SELECT a FROM Appointments a WHERE a.userNameProfessional = ?1 AND a.freeAppointment = 0")
+    List<Appointments> getScheduledAppointmentsByProfessional(String userNameProfessional);
 }

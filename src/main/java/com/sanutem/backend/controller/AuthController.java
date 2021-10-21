@@ -36,6 +36,7 @@ public class AuthController {
     private final MonthsRepository monthsRepository;
     private final ProfessionalPatientRelRepository professionalPatientRelRepository;
     private final MedicalHistoryRepository medicalHistoryRepository;
+    private final ProfessionalReceptionistRelRepository profRecepRelRepository;
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
@@ -104,11 +105,34 @@ public class AuthController {
         return appointmentsRepository.getAppointmentsByUsername(professional);
     }
 
+    @GetMapping("/user-profile/{professional}/view-calendar")
+    public List<Appointments> getScheduledAppointments(@PathVariable String professional) {
+        return appointmentsRepository.getScheduledAppointmentsByProfessional(professional);
+    }
+
+    @GetMapping("/user-profile/{receptionist}/modify-calendar")
+    public List<Appointments> getScheduledAppointmentsR(@PathVariable String receptionist) {
+        int idReceptionist = usersRepository.findIDByUsername(receptionist);
+        String professional = profRecepRelRepository.findUsernameProfessionalByIDReceptionist(idReceptionist);
+        return appointmentsRepository.getScheduledAppointmentsByProfessional(professional);
+    }
+
     @PostMapping("/user-profile/{username}/search/{professional}/schedule/{id}")
     public ResponseEntity<String> scheduleAppointment(@RequestBody ScheduleRequest scheduleRequest) {
         appointmentsRepository.scheduleAppointmentById(scheduleRequest.getUserNamePatient(), scheduleRequest.getIdAppointments());
         return new ResponseEntity<>("Schedule Successful",
                 OK);
+    }
+
+    @DeleteMapping("/user-profile/{receptionist}/modify-calendar/{id}")
+    public ResponseEntity<Void> deleteAppointment(@PathVariable String receptionist, @PathVariable int id) {
+        Optional<Appointments> appointmentToDelete = appointmentsRepository.findById(id);
+
+        if (appointmentToDelete.isPresent()) {
+            appointmentsRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/update/")

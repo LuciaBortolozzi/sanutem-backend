@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.text.*;
 
@@ -50,8 +51,12 @@ public class AuthService {
         user.setFirstName(registerRequest.getFirstName());
         user.setLastName(registerRequest.getLastName());
         user.setDni(registerRequest.getDni());
-        user.setHomeAddress(registerRequest.getAddress());
-        //user.setBirthday(LocalDate.parse(registerRequest.getBirthday()));
+        user.setHomeAddress(registerRequest.getHomeAddress());
+
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate  birthday = LocalDate.parse(registerRequest.getBirthday(), df);
+
+        user.setBirthday(birthday);
         user.setSex(registerRequest.getSex());
         user.setCreated(Instant.now());
         user.setEnabled(false);
@@ -79,7 +84,11 @@ public class AuthService {
         pet.setName(registerPetRequest.getName());
         pet.setSpecies(registerPetRequest.getSpecies());
         pet.setBreed(registerPetRequest.getBreed());
-        //pet.setBirthday(LocalDate.parse(registerPetRequest.getBirthday()));
+
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate  birthday = LocalDate.parse(registerPetRequest.getBirthday(), df);
+
+        pet.setBirthday(birthday);
         pet.setSex(registerPetRequest.getSex());
         pet.setMedicalHistory(registerPetRequest.getMedical_history());
         pet.setSurgeries(registerPetRequest.getSurgeries());
