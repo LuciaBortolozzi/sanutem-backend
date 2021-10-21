@@ -16,7 +16,7 @@ public class UpdateRequest {
     private String lastName;
     private String dni;
     private String address;
-    //private String birthday;
+    private String birthday;
     private String sex;
     private String role;
     private String blood_type;

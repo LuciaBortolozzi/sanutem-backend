@@ -27,11 +27,11 @@ public class MedicalTestsController {
     @Autowired
     private MedicalTestsService medicalTestService;
 
-    @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/user-profile/{username}/medical-tests/upload")
+    public ResponseEntity<ResponseMessage> uploadFile(@PathVariable String username, @RequestParam("file") MultipartFile file) {
         String message = "";
         try {
-            medicalTestService.store(file);
+            medicalTestService.store(username, file);
 
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
@@ -41,7 +41,7 @@ public class MedicalTestsController {
         }
     }
 
-    @GetMapping("/files")
+    @GetMapping("/user-profile/{username}/medical-tests/files")
     public ResponseEntity<List<ResponseFile>> getListFiles() {
         List<ResponseFile> files = medicalTestService.getAllFiles().map(dbFile -> {
             String fileDownloadUri = ServletUriComponentsBuilder
@@ -60,7 +60,7 @@ public class MedicalTestsController {
         return ResponseEntity.status(HttpStatus.OK).body(files);
     }
 
-    @GetMapping("/files/{id}")
+    @GetMapping("/user-profile/{username}/medical-tests/files/{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable String id) {
         MedicalTests medicalTest = medicalTestService.getFile(id);
 
