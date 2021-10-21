@@ -429,7 +429,11 @@ public class AuthService {
         Integer patientID = userRepository.findIDByUsername(addMedicalHistoryRequest.getPatientName());
         MedicalHistory medicalHistory = new MedicalHistory();
         medicalHistory.setDetails(addMedicalHistoryRequest.getDetails());
-        //medicalHistory.setDate(addMedicalHistoryRequest.getDate());
+
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(addMedicalHistoryRequest.getDate(), df);
+
+        medicalHistory.setDate(date);
         medicalHistory.setId(patientID);
 
         medicalHistoryRepository.save(medicalHistory);
