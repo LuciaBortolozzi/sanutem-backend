@@ -40,6 +40,7 @@ public class AuthService {
     private final ProfessionalReceptionistRelRepository professionalReceptionistRelRepository;
     private final ProfessionalAvailabilityRepository professionalAvailabilityRepository;
     private final AppointmentsRepository appointmentsRepository;
+    private final MedicalHistoryRepository medicalHistoryRepository;
 
     public void signup(RegisterRequest registerRequest) {
         Users user = new Users();
@@ -412,5 +413,17 @@ public class AuthService {
             hours = hours + "range_13;";
         }
         return hours;
+    }
+
+    public void medicalHistory(AddMedicalHistoryRequest addMedicalHistoryRequest) {
+
+        Integer patientID = userRepository.findIDByUsername(addMedicalHistoryRequest.getPatientName());
+        MedicalHistory medicalHistory = new MedicalHistory();
+        medicalHistory.setDetails(addMedicalHistoryRequest.getDetails());
+        //medicalHistory.setDate(addMedicalHistoryRequest.getDate());
+        medicalHistory.setId(patientID);
+
+        medicalHistoryRepository.save(medicalHistory);
+
     }
 }
