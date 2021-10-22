@@ -132,15 +132,13 @@ public class AuthController {
                 OK);
     }
 
-    @DeleteMapping("/user-profile/{receptionist}/modify-calendar/{id}")
-    public ResponseEntity<Void> deleteAppointment(@PathVariable String receptionist, @PathVariable int id) {
-        Optional<Appointments> appointmentToDelete = appointmentsRepository.findById(id);
-
-        if (appointmentToDelete.isPresent()) {
-            appointmentsRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+    @DeleteMapping("/user-profile/modify-calendar/cancel-appointment/")
+    public ResponseEntity<String> cancelAppointment(@RequestBody CancelRequest cancelRequest) {
+        System.out.println("llega");
+        appointmentsRepository.cancelAppointmentById(cancelRequest.getIdAppointments());
+        System.out.println("llega2");
+        return new ResponseEntity<>("Cancel Appointment Successful",
+                OK);
     }
 
     @PostMapping("/update/")
