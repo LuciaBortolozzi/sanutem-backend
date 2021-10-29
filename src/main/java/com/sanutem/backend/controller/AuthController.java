@@ -132,11 +132,9 @@ public class AuthController {
                 OK);
     }
 
-    @DeleteMapping("/user-profile/modify-calendar/cancel-appointment/")
+    @PostMapping("/user-profile/modify-calendar/cancel-appointment/")
     public ResponseEntity<String> cancelAppointment(@RequestBody CancelRequest cancelRequest) {
-        System.out.println("llega");
         appointmentsRepository.cancelAppointmentById(cancelRequest.getIdAppointments());
-        System.out.println("llega2");
         return new ResponseEntity<>("Cancel Appointment Successful",
                 OK);
     }
