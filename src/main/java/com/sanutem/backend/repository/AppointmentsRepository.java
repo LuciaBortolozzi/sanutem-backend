@@ -15,6 +15,11 @@ public interface AppointmentsRepository extends JpaRepository<Appointments, Inte
     @Query("UPDATE Appointments a SET a.userNamePatient = ?1, a.freeAppointment = 0 WHERE a.idAppointments = ?2")
     void scheduleAppointmentById(String userName, Integer id);
 
+    @Modifying
+    @Transactional
+    @Query("UPDATE Appointments a SET a.userNamePatient = null, a.freeAppointment = 1 WHERE a.idAppointments = ?1")
+    void cancelAppointmentById(Integer id);
+
     @Query("SELECT a FROM Appointments a WHERE a.userNameProfessional = ?1")
     List<Appointments> getAppointmentsByUsername(String userNameProfessional);
 
