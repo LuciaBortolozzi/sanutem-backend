@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.text.*;
 
@@ -40,6 +41,7 @@ public class AuthService {
     private final ProfessionalReceptionistRelRepository professionalReceptionistRelRepository;
     private final ProfessionalAvailabilityRepository professionalAvailabilityRepository;
     private final AppointmentsRepository appointmentsRepository;
+    private final MedicalHistoryRepository medicalHistoryRepository;
 
     public void signup(RegisterRequest registerRequest) {
         Users user = new Users();
@@ -49,8 +51,12 @@ public class AuthService {
         user.setFirstName(registerRequest.getFirstName());
         user.setLastName(registerRequest.getLastName());
         user.setDni(registerRequest.getDni());
-        user.setHomeAddress(registerRequest.getAddress());
-        //user.setBirthday(LocalDate.parse(registerRequest.getBirthday()));
+        user.setHomeAddress(registerRequest.getHomeAddress());
+
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate  birthday = LocalDate.parse(registerRequest.getBirthday(), df);
+
+        user.setBirthday(birthday);
         user.setSex(registerRequest.getSex());
         user.setCreated(Instant.now());
         user.setEnabled(false);
@@ -78,7 +84,11 @@ public class AuthService {
         pet.setName(registerPetRequest.getName());
         pet.setSpecies(registerPetRequest.getSpecies());
         pet.setBreed(registerPetRequest.getBreed());
-        //pet.setBirthday(LocalDate.parse(registerPetRequest.getBirthday()));
+
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate  birthday = LocalDate.parse(registerPetRequest.getBirthday(), df);
+
+        pet.setBirthday(birthday);
         pet.setSex(registerPetRequest.getSex());
         pet.setMedicalHistory(registerPetRequest.getMedical_history());
         pet.setSurgeries(registerPetRequest.getSurgeries());
@@ -203,8 +213,6 @@ public class AuthService {
         String days = new String();
         days = daysSelection(availabilityRequest);
         professionalAvailability.setWeekDays(days);
-
-        professionalAvailability.setDuration("30");
 
         String hours = new String();
         hours = rageTimeSelection(availabilityRequest);
@@ -414,5 +422,21 @@ public class AuthService {
             hours = hours + "range_13;";
         }
         return hours;
+    }
+
+    public void medicalHistory(AddMedicalHistoryRequest addMedicalHistoryRequest) {
+
+        Integer patientID = userRepository.findIDByUsername(addMedicalHistoryRequest.getPatientName());
+        MedicalHistory medicalHistory = new MedicalHistory();
+        medicalHistory.setDetails(addMedicalHistoryRequest.getDetails());
+
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(addMedicalHistoryRequest.getDate(), df);
+
+        medicalHistory.setDate(date);
+        medicalHistory.setId(patientID);
+
+        medicalHistoryRepository.save(medicalHistory);
+
     }
 }

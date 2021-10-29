@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,10 +29,14 @@ public class AuthController {
     private final RefreshTokenService refreshTokenService;
     private final UsersRepository usersRepository;
     private final PetsRepository petsRepository;
+    private final AppointmentsRepository appointmentsRepository;
     private final ProvincesRepository provincesRepository;
     private final SpecializationsRepository specializationsRepository;
     private final HealthInsurancesRepository healthInsurancesRepository;
     private final MonthsRepository monthsRepository;
+    private final ProfessionalPatientRelRepository professionalPatientRelRepository;
+    private final MedicalHistoryRepository medicalHistoryRepository;
+    private final ProfessionalReceptionistRelRepository profRecepRelRepository;
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
@@ -95,6 +100,45 @@ public class AuthController {
         return petsRepository.getPetsByUsername(username);
     }
 
+    @GetMapping("/user-profile/{username}/search/{professional}/schedule")
+    public List<Appointments> getAppointments(@PathVariable String professional) {
+        return appointmentsRepository.getAppointmentsByUsername(professional);
+    }
+
+    @GetMapping("/user-profile/{professional}/view-calendar")
+    public List<Appointments> getScheduledAppointments(@PathVariable String professional) {
+        return appointmentsRepository.getScheduledAppointmentsByProfessional(professional);
+    }
+
+    @GetMapping("/user-profile/{receptionist}/modify-calendar")
+    public List<Appointments> getScheduledAppointmentsR(@PathVariable String receptionist) {
+        int idReceptionist = usersRepository.findIDByUsername(receptionist);
+        String professional = profRecepRelRepository.findUsernameProfessionalByIDReceptionist(idReceptionist);
+        return appointmentsRepository.getScheduledAppointmentsByProfessional(professional);
+    }
+
+    @PostMapping("/user-profile/{username}/search/{professional}/schedule/{id}")
+    public ResponseEntity<String> scheduleAppointment(@RequestBody ScheduleRequest scheduleRequest) {
+
+        ProfessionalPatientRel professionalPatientRel = new ProfessionalPatientRel();
+        Integer idPatient = usersRepository.findIDByUsername(scheduleRequest.getUserNamePatient());
+        Integer idProfessional = usersRepository.findIDByUsername(scheduleRequest.getUserNameProfessional());
+        professionalPatientRel.setIdPatient(idPatient);
+        professionalPatientRel.setIdProfessional(idProfessional);
+        professionalPatientRelRepository.save(professionalPatientRel);
+
+        appointmentsRepository.scheduleAppointmentById(scheduleRequest.getUserNamePatient(), scheduleRequest.getIdAppointments());
+        return new ResponseEntity<>("Schedule Successful",
+                OK);
+    }
+
+    @PostMapping("/user-profile/modify-calendar/cancel-appointment/")
+    public ResponseEntity<String> cancelAppointment(@RequestBody CancelRequest cancelRequest) {
+        appointmentsRepository.cancelAppointmentById(cancelRequest.getIdAppointments());
+        return new ResponseEntity<>("Cancel Appointment Successful",
+                OK);
+    }
+
     @PostMapping("/update/")
     public ResponseEntity<String> update(@RequestBody UpdateRequest updateRequest) {
         authService.update(updateRequest);
@@ -149,6 +193,33 @@ public class AuthController {
     public ResponseEntity<String> availability(@RequestBody AvailabilityRequest availabilityRequest) throws ParseException {
         authService.availability(availabilityRequest);
         return new ResponseEntity<>("Availability Registration Successful",
+                OK);
+    }
+
+    @GetMapping("/patients/{username}/")
+    public ArrayList<String> getPatients(@PathVariable String username) {
+        Integer professionalID = usersRepository.findIDByUsername(username);
+        String[] patientListID = professionalPatientRelRepository.findIDPatientByIDProfessional(professionalID);
+        int cont = 0;
+        ArrayList<String> patients = new ArrayList();
+        for(String pa: patientListID ){
+            patients.add(usersRepository.findUsernameByID(Integer.parseInt(pa)));
+        }
+        return patients;
+    }
+
+    @GetMapping("/searchPatient/{patientsName}/")
+    public MedicalHistory[] search(@PathVariable String patientsName) {
+
+        Integer patientID = usersRepository.findIDByUsername(patientsName);
+        MedicalHistory[] medicalHistory = medicalHistoryRepository.findByIDPatient(patientID);
+        return medicalHistory;
+    }
+
+    @PostMapping("/saveMedHistory")
+    public ResponseEntity<String> saveMedHistory(@RequestBody AddMedicalHistoryRequest addMedicalHistoryRequest) throws ParseException {
+        authService.medicalHistory(addMedicalHistoryRequest);
+        return new ResponseEntity<>("Medical History Add Successful",
                 OK);
     }
 }

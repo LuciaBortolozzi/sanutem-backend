@@ -11,4 +11,7 @@ public interface ProfessionalReceptionistRelRepository extends JpaRepository<Pro
 
     @Query("SELECT p.idProfessional FROM ProfessionalReceptionistRel p WHERE p.idReceptionist = ?1 ")
     Integer findIDProfessionalByIDReceptionist(Integer idReceptionist);
+
+    @Query("SELECT u.username FROM ProfessionalReceptionistRel prr JOIN Users as u ON prr.idProfessional = u.id WHERE prr.idReceptionist = ?1")
+    String findUsernameProfessionalByIDReceptionist(Integer idReceptionist);
 }

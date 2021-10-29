@@ -16,9 +16,9 @@ public class MedicalTestsService {
     @Autowired
     private MedicalTestsRepository medicalTestsRepository;
 
-    public MedicalTests store(MultipartFile file) throws IOException {
+    public MedicalTests store(String username, MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        MedicalTests MedicalTests = new MedicalTests(fileName, file.getContentType(), file.getBytes());
+        MedicalTests MedicalTests = new MedicalTests(username, fileName, file.getContentType(), file.getBytes());
 
         return medicalTestsRepository.save(MedicalTests);
     }
