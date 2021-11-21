@@ -233,4 +233,19 @@ public class AuthController {
         return new ResponseEntity<>("Pet Delete Successful",
                 OK);
     }
+
+    @GetMapping("/user-profile/{username}/pets/{idPet}")
+    public Pets getPet(@PathVariable String username, @PathVariable String idPet) {
+        System.out.println(idPet);
+        Pets pet = petsRepository.getPetByID(Integer.parseInt(idPet));
+        System.out.println(pet.getName());
+        return pet;
+    }
+
+    @PostMapping("/user-profile/pets/update")
+    public ResponseEntity<String> update(@RequestBody UpdatePetRequest updatePetRequest) {
+        authService.updatePet(updatePetRequest);
+        return new ResponseEntity<>("Pet Update Successful",
+                OK);
+    }
 }

@@ -21,4 +21,14 @@ public interface PetsRepository extends JpaRepository<Pets, Integer> {
     @Modifying
     @Query("DELETE FROM Pets p WHERE p.idPet = ?1")
     void deletePetByIdPet(Integer idPet);
+
+    @Query("SELECT p FROM Pets p WHERE p.idPet = ?1")
+    Pets getPetByID(Integer idPet);
+
+    @Modifying
+    @Query("UPDATE Pets p SET p.name = ?2, p.species = ?3, p.breed = ?4, p.sex = ?5, p.medicalHistory = ?6, p.surgeries = ?7, p.medicines = ?8 WHERE p.nameUser = ?1 AND p.idPet = ?9")
+    void updatePetByUsernameAndIDPet(String nameUser, String pet, String species, String breed, String sex,
+                                     String medHistory, String surgeries, String medicines, Integer idPet);
+
+
 }

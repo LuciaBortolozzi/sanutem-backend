@@ -204,6 +204,12 @@ public class AuthService {
         userRepository.updateUserByUsername(updateRequest.getEmail(),updateRequest.getFirstName(),updateRequest.getLastName(), updateRequest.getSex(), updateRequest.getUsername());
     }
 
+    public void updatePet(UpdatePetRequest updatePetRequest) {
+        petsRepository.updatePetByUsernameAndIDPet(updatePetRequest.getNameUser(),updatePetRequest.getPet(),
+                updatePetRequest.getSpecies(), updatePetRequest.getBreed(), updatePetRequest.getSex(),
+                updatePetRequest.getMedicalHistory(), updatePetRequest.getSurgeries(), updatePetRequest.getMedicines(), Integer.parseInt(updatePetRequest.getIdPet()));
+    }
+
     public void availability(AvailabilityRequest availabilityRequest) throws ParseException {
         ProfessionalAvailability professionalAvailability = new ProfessionalAvailability();
         ProfessionalAvailability professionalAvailabilityAux = new ProfessionalAvailability();
