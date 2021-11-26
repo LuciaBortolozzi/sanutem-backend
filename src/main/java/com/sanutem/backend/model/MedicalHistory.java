@@ -10,7 +10,7 @@ public class MedicalHistory {
 
     @Id
     @SequenceGenerator(
-            name="medical_history_sequence",
+            name = "medical_history_sequence",
             sequenceName = "medical_history_sequence",
             allocationSize = 1
     )
@@ -27,7 +27,7 @@ public class MedicalHistory {
             name = "id"/*,
             nullable = false*/
     )
-    private Integer id; //hace referencia al id del paciente humano, hay que revisar las annotations: @ManyToOne @OneToMany
+    private Integer id; // user id
     @Column(
             name = "date"/*,
             nullable = false*/
@@ -39,7 +39,8 @@ public class MedicalHistory {
     )
     private String details;
 
-    public MedicalHistory(){}
+    public MedicalHistory() {
+    }
 
     public MedicalHistory(Integer idMedicalHistory, Integer id, LocalDate date, String details) {
         this.idMedicalHistory = idMedicalHistory;

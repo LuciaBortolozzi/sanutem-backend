@@ -19,7 +19,7 @@ public class Appointments {
 
     @Id
     @SequenceGenerator(
-            name="appointments_sequence",
+            name = "appointments_sequence",
             sequenceName = "appointments_sequence",
             allocationSize = 1
     )
@@ -58,7 +58,8 @@ public class Appointments {
     )
     private String userNameProfessional;
 
-    public Appointments() {}
+    public Appointments() {
+    }
 
     public Appointments(Integer idAppointments, String date, String hour,
                         Boolean freeAppointment, String userNamePatient,
@@ -95,15 +96,27 @@ public class Appointments {
         this.hour = hour;
     }
 
-    public Boolean getFreeAppointment() {return freeAppointment;}
+    public Boolean getFreeAppointment() {
+        return freeAppointment;
+    }
 
-    public void setFreeAppointment(Boolean freeAppointment) {this.freeAppointment = freeAppointment;}
+    public void setFreeAppointment(Boolean freeAppointment) {
+        this.freeAppointment = freeAppointment;
+    }
 
-    public String getUserNamePatient() {return userNamePatient;}
+    public String getUserNamePatient() {
+        return userNamePatient;
+    }
 
-    public void setUserNamePatient(String userNamePatient) {this.userNamePatient = userNamePatient;}
+    public void setUserNamePatient(String userNamePatient) {
+        this.userNamePatient = userNamePatient;
+    }
 
-    public String getUserNameProfessional() {return userNameProfessional;}
+    public String getUserNameProfessional() {
+        return userNameProfessional;
+    }
 
-    public void setUserNameProfessional(String userNameProfessional) {this.userNameProfessional = userNameProfessional;}
+    public void setUserNameProfessional(String userNameProfessional) {
+        this.userNameProfessional = userNameProfessional;
+    }
 }

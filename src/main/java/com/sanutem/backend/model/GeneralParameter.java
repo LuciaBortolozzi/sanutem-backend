@@ -11,7 +11,7 @@ public class GeneralParameter {
 
     @Id
     @SequenceGenerator(
-            name="general_parameter_sequence",
+            name = "general_parameter_sequence",
             sequenceName = "general_parameter_sequence",
             allocationSize = 1
     )

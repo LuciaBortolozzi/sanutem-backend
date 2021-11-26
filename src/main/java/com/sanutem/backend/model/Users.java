@@ -20,7 +20,7 @@ public class Users {
 
     @Id
     @SequenceGenerator(
-            name="user_sequence",
+            name = "user_sequence",
             sequenceName = "user_sequence",
             allocationSize = 1
     )
@@ -167,7 +167,9 @@ public class Users {
         this.healthInsurances = healthInsurances;
     }
 
-    public Integer getId() {return id;}
+    public Integer getId() {
+        return id;
+    }
 
     public void setId(Integer id) {
         this.id = id;
@@ -261,39 +263,75 @@ public class Users {
         this.enabled = enabled;
     }
 
-    public String getRole() {return role;}
+    public String getRole() {
+        return role;
+    }
 
-    public void setRole(String role) {this.role = role;}
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-    public String getBlood_type() {return blood_type;}
+    public String getBlood_type() {
+        return blood_type;
+    }
 
-    public void setBlood_type(String blood_type) {this.blood_type = blood_type;}
+    public void setBlood_type(String blood_type) {
+        this.blood_type = blood_type;
+    }
 
-    public String getMedical_history() {return medical_history;}
+    public String getMedical_history() {
+        return medical_history;
+    }
 
-    public void setMedical_history(String medical_history) {this.medical_history = medical_history;}
+    public void setMedical_history(String medical_history) {
+        this.medical_history = medical_history;
+    }
 
-    public String getSurgeries() {return surgeries;}
+    public String getSurgeries() {
+        return surgeries;
+    }
 
-    public void setSurgeries(String surgeries) {this.surgeries = surgeries;}
+    public void setSurgeries(String surgeries) {
+        this.surgeries = surgeries;
+    }
 
-    public String getMedicines() {return medicines;}
+    public String getMedicines() {
+        return medicines;
+    }
 
-    public void setMedicines(String medicines) {this.medicines = medicines;}
+    public void setMedicines(String medicines) {
+        this.medicines = medicines;
+    }
 
-    public String getLicense_number() {return license_number;}
+    public String getLicense_number() {
+        return license_number;
+    }
 
-    public void setLicense_number(String license_number) {this.license_number = license_number;}
+    public void setLicense_number(String license_number) {
+        this.license_number = license_number;
+    }
 
-    public String getSpecialization() {return specialization;}
+    public String getSpecialization() {
+        return specialization;
+    }
 
-    public void setSpecialization(String specialization) {this.specialization = specialization;}
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
+    }
 
-    public String getProvince() {return province;}
+    public String getProvince() {
+        return province;
+    }
 
-    public void setProvince(String province) {this.province = province;}
+    public void setProvince(String province) {
+        this.province = province;
+    }
 
-    public String getHealthInsurances() {return healthInsurances;}
+    public String getHealthInsurances() {
+        return healthInsurances;
+    }
 
-    public void setHealthInsurances(String healthInsurances) {this.healthInsurances = healthInsurances;}
+    public void setHealthInsurances(String healthInsurances) {
+        this.healthInsurances = healthInsurances;
+    }
 }

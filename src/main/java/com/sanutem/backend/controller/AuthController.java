@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -28,27 +26,16 @@ public class AuthController {
     private final AuthService authService;
     private final RefreshTokenService refreshTokenService;
     private final UsersRepository usersRepository;
-    private final PetsRepository petsRepository;
-    private final AppointmentsRepository appointmentsRepository;
     private final ProvincesRepository provincesRepository;
     private final SpecializationsRepository specializationsRepository;
     private final HealthInsurancesRepository healthInsurancesRepository;
     private final MonthsRepository monthsRepository;
     private final ProfessionalPatientRelRepository professionalPatientRelRepository;
-    private final MedicalHistoryRepository medicalHistoryRepository;
-    private final ProfessionalReceptionistRelRepository profRecepRelRepository;
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
         authService.signup(registerRequest);
         return new ResponseEntity<>("User Registration Successful",
-                OK);
-    }
-
-    @PostMapping("/registerPet")
-    public ResponseEntity<String> registerPet(@RequestBody RegisterPetRequest registerPetRequest) {
-        authService.registerPet(registerPetRequest);
-        return new ResponseEntity<>("Pet Registration Successful",
                 OK);
     }
 
@@ -84,7 +71,7 @@ public class AuthController {
         Optional<Users> userToDelete = usersRepository.findByUsername(username);
         authService.deleteUser(username, userToDelete);
 
-        if (userToDelete != null) {
+        if (userToDelete.isPresent()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
@@ -93,53 +80,6 @@ public class AuthController {
     @GetMapping("/user-data/{username}/")
     public Optional<Users> getUserProfileData(@PathVariable String username) {
         return usersRepository.findByUsername(username);
-    }
-
-    @GetMapping("/user-profile/{username}/pets")
-    public List<Pets> getPets(@PathVariable String username) {
-
-        List<Pets> listPets = petsRepository.getPetsByUsername(username);
-
-        return listPets;
-    }
-
-    @GetMapping("/user-profile/{username}/search/{professional}/schedule")
-    public List<Appointments> getAppointments(@PathVariable String professional) {
-        return appointmentsRepository.getAppointmentsByUsername(professional);
-    }
-
-    @GetMapping("/user-profile/{professional}/view-calendar")
-    public List<Appointments> getScheduledAppointments(@PathVariable String professional) {
-        return appointmentsRepository.getScheduledAppointmentsByProfessional(professional);
-    }
-
-    @GetMapping("/user-profile/{receptionist}/modify-calendar")
-    public List<Appointments> getScheduledAppointmentsR(@PathVariable String receptionist) {
-        int idReceptionist = usersRepository.findIDByUsername(receptionist);
-        String professional = profRecepRelRepository.findUsernameProfessionalByIDReceptionist(idReceptionist);
-        return appointmentsRepository.getScheduledAppointmentsByProfessional(professional);
-    }
-
-    @PostMapping("/user-profile/{username}/search/{professional}/schedule/{id}")
-    public ResponseEntity<String> scheduleAppointment(@RequestBody ScheduleRequest scheduleRequest) {
-
-        ProfessionalPatientRel professionalPatientRel = new ProfessionalPatientRel();
-        Integer idPatient = usersRepository.findIDByUsername(scheduleRequest.getUserNamePatient());
-        Integer idProfessional = usersRepository.findIDByUsername(scheduleRequest.getUserNameProfessional());
-        professionalPatientRel.setIdPatient(idPatient);
-        professionalPatientRel.setIdProfessional(idProfessional);
-        professionalPatientRelRepository.save(professionalPatientRel);
-
-        appointmentsRepository.scheduleAppointmentById(scheduleRequest.getUserNamePatient(), scheduleRequest.getIdAppointments());
-        return new ResponseEntity<>("Schedule Successful",
-                OK);
-    }
-
-    @PostMapping("/user-profile/modify-calendar/cancel-appointment/")
-    public ResponseEntity<String> cancelAppointment(@RequestBody CancelRequest cancelRequest) {
-        appointmentsRepository.cancelAppointmentById(cancelRequest.getIdAppointments());
-        return new ResponseEntity<>("Cancel Appointment Successful",
-                OK);
     }
 
     @PostMapping("/update/")
@@ -152,11 +92,11 @@ public class AuthController {
     @PostMapping("/link-receptionist")
     public ResponseEntity<String> linkReceptionist(@RequestBody LinkReceptionistRequest linkReceptionistRequest) {
 
-        if(authService.linkReceptionist(linkReceptionistRequest)){
+        if (authService.linkReceptionist(linkReceptionistRequest)) {
 
             return new ResponseEntity<>("Link Receptionist Successful",
                     OK);
-        }else {
+        } else {
             return new ResponseEntity<>("The ID Receptionist does not exist",
                     NOT_FOUND);
         }
@@ -164,88 +104,38 @@ public class AuthController {
 
     @GetMapping("/provinces-data/")
     public String[] getProvinces() {
-        String[] provinces = provincesRepository.findAllProvinces();
-        return provinces;
+        return provincesRepository.findAllProvinces();
     }
 
     @GetMapping("/specializations-data/")
     public String[] getSpecializations() {
-        String[] specializations = specializationsRepository.findAllSpecializations();
-        return specializations;
+        return specializationsRepository.findAllSpecializations();
     }
 
     @GetMapping("/healthInsurances-data/")
     public String[] getHealthInsurances() {
-        String[] healthInsurances = healthInsurancesRepository.findAllHealthInsurances();
-        return healthInsurances;
+        return healthInsurancesRepository.findAllHealthInsurances();
     }
 
     @GetMapping("/search/{specialization}/{province}/{healthInsurance}/")
-    public Users[] search(@PathVariable String specialization,@PathVariable String province,@PathVariable String healthInsurance) {
-        Users[] users = usersRepository.findProfessionalBySpecializationAndProvinceAndHealthInsurance(specialization, province, healthInsurance);
-        return users;
+    public Users[] search(@PathVariable String specialization, @PathVariable String province, @PathVariable String healthInsurance) {
+        return usersRepository.findProfessionalBySpecializationAndProvinceAndHealthInsurance(specialization, province, healthInsurance);
     }
 
     @GetMapping("/months-data/")
     public String[] getMonths() {
-        String[] months = monthsRepository.findAllMonths();
-        return months;
-    }
-
-    @PostMapping("/availability")
-    public ResponseEntity<String> availability(@RequestBody AvailabilityRequest availabilityRequest) throws ParseException {
-        authService.availability(availabilityRequest);
-        return new ResponseEntity<>("Availability Registration Successful",
-                OK);
+        return monthsRepository.findAllMonths();
     }
 
     @GetMapping("/patients/{username}/")
     public ArrayList<String> getPatients(@PathVariable String username) {
         Integer professionalID = usersRepository.findIDByUsername(username);
         String[] patientListID = professionalPatientRelRepository.findIDPatientByIDProfessional(professionalID);
-        int cont = 0;
-        ArrayList<String> patients = new ArrayList();
-        for(String pa: patientListID ){
+        ArrayList<String> patients = new ArrayList<String>();
+        for (String pa : patientListID) {
             patients.add(usersRepository.findUsernameByID(Integer.parseInt(pa)));
         }
         return patients;
     }
 
-    @GetMapping("/searchPatient/{patientsName}/")
-    public MedicalHistory[] search(@PathVariable String patientsName) {
-
-        Integer patientID = usersRepository.findIDByUsername(patientsName);
-        MedicalHistory[] medicalHistory = medicalHistoryRepository.findByIDPatient(patientID);
-        return medicalHistory;
-    }
-
-    @PostMapping("/saveMedHistory")
-    public ResponseEntity<String> saveMedHistory(@RequestBody AddMedicalHistoryRequest addMedicalHistoryRequest) throws ParseException {
-        authService.medicalHistory(addMedicalHistoryRequest);
-        return new ResponseEntity<>("Medical History Add Successful",
-                OK);
-    }
-
-    @DeleteMapping("/user-profile/{username}/pets/{idPet}/")
-    public ResponseEntity<String> deletePet(@PathVariable String idPet, @PathVariable String username) {
-
-        petsRepository.deletePetByIdPet(Integer.parseInt(idPet));
-        return new ResponseEntity<>("Pet Delete Successful",
-                OK);
-    }
-
-    @GetMapping("/user-profile/{username}/pets/{idPet}")
-    public Pets getPet(@PathVariable String username, @PathVariable String idPet) {
-        System.out.println(idPet);
-        Pets pet = petsRepository.getPetByID(Integer.parseInt(idPet));
-        System.out.println(pet.getName());
-        return pet;
-    }
-
-    @PostMapping("/user-profile/pets/update")
-    public ResponseEntity<String> update(@RequestBody UpdatePetRequest updatePetRequest) {
-        authService.updatePet(updatePetRequest);
-        return new ResponseEntity<>("Pet Update Successful",
-                OK);
-    }
 }

@@ -11,7 +11,7 @@ public class ProfessionalAvailability {
 
     @Id
     @SequenceGenerator(
-            name="professional_availability_sequence",
+            name = "professional_availability_sequence",
             sequenceName = "professional_availability_sequence",
             allocationSize = 1
     )
