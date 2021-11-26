@@ -9,7 +9,7 @@ public class ProfessionalReceptionistRel {
 
     @Id
     @SequenceGenerator(
-            name="prof_recep_sequence",
+            name = "prof_recep_sequence",
             sequenceName = "prof_recep_sequence",
             allocationSize = 1
     )
@@ -39,7 +39,8 @@ public class ProfessionalReceptionistRel {
         this.idReceptionist = idReceptionist;
     }
 
-    public ProfessionalReceptionistRel() {}
+    public ProfessionalReceptionistRel() {
+    }
 
     public Integer getIdProfRecep() {
         return idProfRecep;

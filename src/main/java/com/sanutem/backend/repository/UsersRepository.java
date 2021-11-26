@@ -29,6 +29,6 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
     @Query("SELECT u.id FROM Users u WHERE u.username = ?1")
     Integer findIDByUsername(String username);
 
-    @Query("SELECT u FROM Users u WHERE u.specialization = ?1")
+    @Query("SELECT u FROM Users u WHERE u.specialization = ?1 AND u.province = ?2 AND u.healthInsurances = ?3")
     Users[] findProfessionalBySpecializationAndProvinceAndHealthInsurance(String specialization, String province, String healthInsurance);
 }

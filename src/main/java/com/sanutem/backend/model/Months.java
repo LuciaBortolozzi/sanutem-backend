@@ -9,7 +9,7 @@ public class Months {
 
     @Id
     @SequenceGenerator(
-            name="months_sequence",
+            name = "months_sequence",
             sequenceName = "months_sequence",
             allocationSize = 1
     )
@@ -35,7 +35,8 @@ public class Months {
     )
     private String nameMonth;
 
-    public Months() {}
+    public Months() {
+    }
 
     public Months(Integer idMonth, Integer numberMonth, String nameMonth) {
         this.idMonth = idMonth;

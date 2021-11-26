@@ -9,7 +9,7 @@ public class Specializations {
 
     @Id
     @SequenceGenerator(
-            name="specializations_sequence",
+            name = "specializations_sequence",
             sequenceName = "specializations_sequence",
             allocationSize = 1
     )

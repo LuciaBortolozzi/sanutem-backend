@@ -9,7 +9,7 @@ public class ProfessionalPatientRel {
 
     @Id
     @SequenceGenerator(
-            name="prof_patient_sequence",
+            name = "prof_patient_sequence",
             sequenceName = "prof_patient_sequence",
             allocationSize = 1
     )
@@ -33,7 +33,8 @@ public class ProfessionalPatientRel {
     )
     private Integer idPatient;
 
-    public ProfessionalPatientRel() {}
+    public ProfessionalPatientRel() {
+    }
 
     public ProfessionalPatientRel(Integer idProfPatient, Integer idProfessional, Integer idPatient) {
         this.idProfPatient = idProfPatient;

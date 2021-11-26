@@ -9,7 +9,7 @@ public class HealthInsurances {
 
     @Id
     @SequenceGenerator(
-            name="healthInsurances_sequence",
+            name = "healthInsurances_sequence",
             sequenceName = "healthInsurances_sequence",
             allocationSize = 1
     )

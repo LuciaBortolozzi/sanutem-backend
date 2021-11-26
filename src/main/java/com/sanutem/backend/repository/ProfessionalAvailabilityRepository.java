@@ -10,5 +10,5 @@ import java.util.List;
 public interface ProfessionalAvailabilityRepository extends JpaRepository<ProfessionalAvailability, Long> {
 
     @Query("SELECT p FROM ProfessionalAvailability p WHERE p.month = ?1 AND p.userNameProfessional = ?2")
-    ProfessionalAvailability getProfessionalAvailabilityByMonthAndUserNameProfessional(String month,String userNameProfessional);
+    ProfessionalAvailability getProfessionalAvailabilityByMonthAndUserNameProfessional(String month, String userNameProfessional);
 }

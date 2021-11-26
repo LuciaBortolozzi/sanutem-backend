@@ -10,7 +10,7 @@ public class Pets {
 
     @Id
     @SequenceGenerator(
-            name="pet_sequence",
+            name = "pet_sequence",
             sequenceName = "pet_sequence",
             allocationSize = 1
     )
@@ -69,7 +69,8 @@ public class Pets {
     )
     private String breed;
 
-    public Pets(){}
+    public Pets() {
+    }
 
     public Pets(Integer idPet, String nameUser, String name,
                 String sex, LocalDate birthday, String medicalHistory,

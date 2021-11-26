@@ -9,7 +9,7 @@ public class Provinces {
 
     @Id
     @SequenceGenerator(
-            name="provinces_sequence",
+            name = "provinces_sequence",
             sequenceName = "provinces_sequence",
             allocationSize = 1
     )
